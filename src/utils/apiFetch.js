@@ -12,8 +12,8 @@ const apiFetch = async (url, method = "GET", header = {}, body = {}) => {
         options.headers = { 'Content-Type': 'application/json', ...header }
         options.method = method;
     }
-
     try {
+
         const result = await fetch(url, options);
         if (result.ok) {
             return await result.json()
