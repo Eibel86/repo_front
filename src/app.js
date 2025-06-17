@@ -9,12 +9,13 @@ const port = process.env.PORT || 4000;
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("views", `${__dirname}views`);
+console.log(`${__dirname}/views`)
+app.set("views", `${__dirname}/views`);
 
-app.use(express.static(`${__dirname}public`));
+app.use(express.static(`${__dirname}/public`));
 
 // app.use("/dashboard", backRoutes)
-// app.use("/", frontRoutes)
+app.use("/", authRoutes)
 
 
 app.listen(port, () => {
