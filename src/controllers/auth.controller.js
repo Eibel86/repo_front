@@ -7,13 +7,12 @@ const login = async (req, res) => {
 }
 
 const backLogin = async (req, res) => {
-    const endpoint = "http://localhost:5000/" + "auth/login";
-    console.log(process.env.URL_BASE_BACK)
+    const endpoint = process.env.URL_BASE_BACK + "auth/login";
     try {
         const result = await apiFetch(endpoint, "POST", {}, { email: req.body.email, password: req.body.password })
         res.status(200).render("login")
+        console.log(result)
     } catch (error) {
-        // res.render("error", { error })
         console.log(error)
         res.status(200).render("login")
     }
