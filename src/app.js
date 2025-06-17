@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-const { filmsRoutes, authRoutes } = require("./routers/index.routes");
+const { filmsRoutes, authRoutes, dashboardRoutes } = require("./routers/index.routes");
 
 
 
@@ -17,8 +17,10 @@ app.set("views", `${__dirname}/views`);
 
 app.use(express.static(`${__dirname}/public`));
 
-// app.use("/dashboard", backRoutes)
+
 app.use("/", authRoutes)
+app.use("/dashboard", dashboardRoutes)
+app.use("/films", filmsRoutes)
 
 
 app.listen(port, () => {
