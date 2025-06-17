@@ -1,7 +1,10 @@
 const { Router } = require("express");
-const { login, backLogin } = require("../controllers/auth.controller")
+const { login, backLogin, registry, backRegistry } = require("../controllers/auth.controller")
 const router = new Router();
 
+router.get("/registry", registry);
+
+router.post("/registry", backRegistry);
 
 router.get("/login", login);
 
