@@ -1,7 +1,9 @@
 // IMPORTS
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const setUser = require("./middlewares/user.middleware");
 require("dotenv").config();
+
 
 const { filmsRoutes, authRoutes, dashboardRoutes } = require("./routers/index.routes");
 
@@ -12,6 +14,7 @@ const port = process.env.PORT || 4000;
 
 // MIDDLEWARES GLOBALES
 app.use(cookieParser());
+app.use(setUser);
 app.use(express.urlencoded({ extended: true })); // Middleware para parsear body
 app.use(express.json());
 

@@ -1,4 +1,6 @@
 <header>
-    <p>Header</pp>
-    <a href="/logout">Cerrar sesión</a>
+    <p>Header</p>
+    <% if (user) { %>
+        <a href="/logout">Cerrar sesión</a>
+        <% } %>
 </header>

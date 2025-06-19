@@ -9,7 +9,7 @@ const { apiFetch } = require("../utils/apiFetch");
     -> Incluye botón de crear película
 */
 const adminDashboard = async (req, res) => {
-    res.status(200).render("adminDashboard")
+    res.status(200).render("admin/adminDashboard")
 }
 
 

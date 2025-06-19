@@ -9,7 +9,7 @@ const router = new Router();
 
 // RUTA: Directorio base
 //http://localhost:4000/admin
-router.get("/admin", adminDashboard);
+router.get("/", adminDashboard);
 
 // RUTA: Mostrar formulario
 //http://localhost:4000/admin/createfilm
