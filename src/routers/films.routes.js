@@ -1,11 +1,13 @@
 // IMPORTS
 const { Router } = require("express");
-const { films } = require("../controllers/films.controller")
+const { films, getFilmsByTitle } = require("../controllers/films.controller")
 const router = new Router();
 
 
 // RUTAS 
 router.get("/", films);
+
+router.post("/searchFilmsByTitle", getFilmsByTitle)
 
 // SAMPLE: router.get("/films", authenticate, filmsController);
 

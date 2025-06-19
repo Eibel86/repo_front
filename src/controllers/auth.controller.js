@@ -25,7 +25,7 @@ const registry = async (req, res) => {
  * @returns Redirige a login si tiene éxito, o vuelve a registry si hay error.
  */
 const backRegistry = async (req, res) => {
-    const endpoint = process.env.URL_BASE_BACK + "auth/registry"; //Construye la URL completa del endpoint externo de registro
+    const endpoint = process.env.URL_BASE_BACK + "/auth/registry"; //Construye la URL completa del endpoint externo de registro
     try {
         const result = await apiFetch( //Envía los datos del usuario al backend usando una función helper (apiFetch)
             endpoint,   //URL
@@ -56,7 +56,7 @@ const login = async (req, res) => {
 
 // CONTROLADOR: Login en backend
 const backLogin = async (req, res) => {
-    const endpoint = process.env.URL_BASE_BACK + "auth/login";
+    const endpoint = process.env.URL_BASE_BACK + "/auth/login";
     try {
         const result = await apiFetch(endpoint, "POST", {}, {
             email: req.body.email,

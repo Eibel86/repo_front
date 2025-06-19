@@ -7,6 +7,20 @@
 </head>
 
 <%- include("../partials/header") -%>
-    <h1>films</h1>
 
-    <%- include("./partials/footer") -%>
+    <h1>Películas</h1>
+
+    <form action="/films/searchFilmsByTitle" method="POST">
+        <input type="text" name="title">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <% if (films && films.length> 0) { %>
+        <% films.forEach(film=> { %>
+            <%- include("../partials/card", { film }) %>
+                <% }) %>
+                    <% } else { %>
+                        <p>No se encontraron películas.</p>
+                        <% } %>
+
+                            <%- include("../partials/footer") -%>

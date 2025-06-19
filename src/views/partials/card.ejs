@@ -1,0 +1,10 @@
+<div class="card">
+    <img src="<%= backendUrl %>/<%= film.image_url %>" alt="Imagen de <%= film.full_title %>">
+    <h2>
+        <%= film.full_title %>
+    </h2>
+    <form action="/favorites/add/<%= film.film_id %>" method="POST" class="d-inline">
+        <button type="submit" class="btn btn-primary">Añadir a Favoritos</button>
+    </form>
+    <!-- crear un endpoint para favoritos, crear controlador, pasarle la id desde aqui y pillar el del usuario desde las cookies -->
+</div>
