@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crear una película</title>
+</head>
+
+<%- include("./partials/header") -%>
+
+<body>
+    <header>
+        <h1>Crear una película</h1>
+    </header>
+
+    <main>
+        <!-- FORMULARIO: CREATE FILM ----------------------------------------------->
+        <form action="createfilm" method="POST" enctype="multipart/form-data">
+
+            <%# INPUT: full_title %>
+            <div>
+                <label for="full_title">Título</label>
+                <input type="text" name="full_title" id="full_title" required />
+            </div>
+
+            <%# INPUT: director_name %>
+            <div>
+                <label for="director_name">Director</label>
+                <input type="text" name="director_name" id="director_name" required />
+            </div>
+
+            <%# INPUT: genre_name %>
+            <div>
+                <label for="genre_name">Género</label>
+                <input type="text" name="genre_name" id="genre_name" required />
+            </div>
+
+            <%# INPUT: image (input type file)%>
+            <div>
+                <label for="image">Imagen de la película</label>
+                <input type="file" name="image" id="image" accept="image/*" required />
+            </div>
+
+            <%# INPUT: release_date %>
+            <div>
+                <label for="release_date">Fecha de estreno</label>
+                <input type="date" name="release_date" id="release_date" required />
+            </div>
+
+            <%# INPUT: duration %>
+            <div>
+                <label for="duration">Duración (minutos)</label>
+                <input type="number" name="duration" id="duration" required />
+            </div>
+
+            <%# INPUT: synopsis %>
+            <div>
+                <label for="synopsis">Sinopsis</label>
+                <textarea name="synopsis" id="synopsis" rows="5" required></textarea>
+            </div>
+
+            <%# INPUT: botón de enviar %>
+            <div>
+                <button type="submit">Crear película</button>
+            </div>
+        </form>
+    </main>
+</body>
+
+
+<%- include("./partials/footer") -%>
+</html>
