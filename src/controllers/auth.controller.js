@@ -12,7 +12,7 @@ const { apiFetch } = require("../utils/apiFetch");
  * @returns Renderiza la plantilla "registry".
  */
 const registry = async (req, res) => {
-    res.status(200).render("registry"); //Renderiza la vista 'registry' (formulario de registro)
+    res.status(200).render("auth/registry"); //Renderiza la vista 'registry' (formulario de registro)
 };
 // CONTROLADOR: Registro en backend
 /**
@@ -32,16 +32,16 @@ const backRegistry = async (req, res) => {
             "POST",     //Método
             {},         //Headers (vacíos en este caso)
             {           //Cuerpo de la petición con datos del formulario
-                name: req.body.name, 
+                name: req.body.name,
                 email: req.body.email,
                 password: req.body.password
             });
         console.log(result); //Muestra en consola la respuesta del back (msj o token)
-        res.status(200).render("login"); //Redirige al usuario a la página de login si el registro fue exitoso
+        res.status(200).render("auth/login"); //Redirige al usuario a la página de login si el registro fue exitoso
 
     } catch (error) {
         console.log(error);
-        res.status(200).render("registry"); //Vuelve a mostrar el formulario de registro al usuario
+        res.status(200).render("auth/registry"); //Vuelve a mostrar el formulario de registro al usuario
     }
 }
 
@@ -49,7 +49,7 @@ const backRegistry = async (req, res) => {
 // CONTROLADOR: Login
 const login = async (req, res) => {
     //TODO: mirar en la cookie si hay token, y si lo hay redireccionar dependiendo el rol y si no renderizar el login
-    res.status(200).render("login")
+    res.status(200).render("auth/login")
 
 }
 
@@ -73,17 +73,17 @@ const backLogin = async (req, res) => {
             return res.redirect("/redirect-by-role");
         }
 
-        res.status(200).render("login");
+        res.status(200).render("auth/login");
     } catch (error) {
         console.log(error)
-        res.status(200).render("login");
+        res.status(200).render("auth/login");
     }
 };
 
 // CONTROLADOR: Logout
 const logout = (req, res) => {
     res.clearCookie("token"); //Elimina la cookie
-    return res.redirect("/login"); //Redirige al login
+    return res.redirect("auth/login"); //Redirige al login
 }
 
 
