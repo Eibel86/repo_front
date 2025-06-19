@@ -1,0 +1,31 @@
+
+
+// CONTROLADOR: renderizar vista create-film
+/**
+ * Controlador que renderiza la vista de creación de películas.
+ */
+const renderCreateFilm = async (req, res) => {
+    res.status(200).render("createFilm");
+};
+
+
+// CONTROLADOR: procesar formulario de crear películas
+/**
+ * Controlador que procesa el formulario de creación de películas.
+ * (Este se completará cuando integres Multer y backend)
+ */
+const createFilm = async (req, res) => {
+    console.log("Datos recibidos:", req.body);
+    console.log("Archivo recibido:", req.file);
+    
+    // De momento redirige al home o renderiza mensaje simple
+    res.send("Película recibida (lógica aún por implementar)");
+};
+
+
+
+// EXPORTS
+module.exports = {
+    renderCreateFilm,
+    createFilm
+};
