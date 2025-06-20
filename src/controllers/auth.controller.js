@@ -42,6 +42,7 @@ const backRegistry = async (req, res) => {
                 secure: false,
                 maxAge: 1000 * 60 * 60 * 24,
             });
+            //Esto lo podemos probar a redirigir a films
             return res.redirect("/redirect-by-role");  // middleware para redirigir según rol
         }
 
@@ -76,6 +77,17 @@ const backLogin = async (req, res) => {
                 secure: false, //Cambiar a true si usamos HTTPS
                 maxAge: 1000 * 60 * 60 * 24 //1 día 
             });
+
+            // Guarda los datos en cookies accesibles desde JS
+            res.cookie("userId", result.user.id, {
+                httpOnly: false,
+                maxAge: 1000 * 60 * 60 * 24
+            });
+            res.cookie("userRole", result.user.role, {
+                httpOnly: false,
+                maxAge: 1000 * 60 * 60 * 24
+            });
+            
             //Redirigimos a una ruta que decide a dónde ir según el rol
             return res.redirect("/redirect-by-role");
         }
@@ -84,7 +96,7 @@ const backLogin = async (req, res) => {
         res.status(200).render("auth/login", { error: "Credenciales inválidas" });
     } catch (error) {
         console.log(error);
-        res.status(200).render("auth/login", { error: "Error en el servidor" });
+        res.status(200).render("auth/login", { error: "password o email invalidos" });
     }
 };
 

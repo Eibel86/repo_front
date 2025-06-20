@@ -26,7 +26,7 @@ const renderCreateFilm = async (req, res) => {
 const createFilm = async (req, res) => {
     // console.log("Datos recibidos:", req.body);
     // console.log("Archivo recibido:", req.file);
-    
+
     // De momento redirige al home o renderiza mensaje simple
     res.send("Película recibida (lógica aún por implementar)");
 };

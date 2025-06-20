@@ -1,19 +1,16 @@
-const jwt = require("jsonwebtoken");
-
 const setUser = (req, res, next) => {
-    const token = req.cookies.token;
-    if (token) {
-        try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            res.locals.user = decoded;
-            req.user = decoded;
-        } catch (error) {
-            res.locals.user = null;
-        }
+    const userId = req.cookies.userId;
+    const userRole = req.cookies.userRole;
+
+    if (userId && userRole) {
+        req.user = { id: userId, role: userRole };
+        res.locals.user = req.user;
     } else {
+        req.user = null;
         res.locals.user = null;
     }
+
     next();
-}
+};
 
 module.exports = setUser;

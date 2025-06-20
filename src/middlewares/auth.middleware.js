@@ -1,28 +1,17 @@
-// IMPORTS
-const jwt = require("jsonwebtoken");
-
-
-
 // MIDDLEWARE: Autenticación
 // Validar el token desde la cookie.
 // Redireccionar según el rol (Admin o User).
 // Tener la base preparada para proteger cualquier ruta en el futuro.
 const authenticate = (req, res, next) => {
-    const token = req.cookies.token;
+    const { userId, userRole } = req.cookies;
 
-    if (!token) {
+    if (!userId || !userRole) {
         return res.redirect("/login");
     }
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; //nombre, id, email, role...
-        next();
-    } catch (error) {
-        console.log("Token inválido:", error);
-        return res.redirect("/login");
-    }
+
+    req.user = { id: userId, role: userRole };
+    next();
 };
-
 
 // MIDDLEWARE: Redireccionar por role
 const redirectByRole = (req, res) => {
@@ -31,10 +20,19 @@ const redirectByRole = (req, res) => {
     return res.redirect("/login");
 }
 
+// MIDDLEWARE: Verifica si el usuario tiene rol "admin"
+const authorizeAdmin = (req, res, next) => {
+    if (req.user.role !== "admin") {
+        return res.status(403).send("Acceso denegado: no tienes permisos de administrador.");
+    }
+    next();
+};
+
 
 
 // EXPORTS
 module.exports = {
     authenticate,
-    redirectByRole
+    redirectByRole,
+    authorizeAdmin
 };
