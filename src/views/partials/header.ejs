@@ -1,6 +1,5 @@
-<header>
-    <p>Header</p>
-    <% if (user) { %>
-        <a href="/logout">Cerrar sesión</a>
-        <% } %>
-</header>
+<% if (cookies && cookies.token) { %>
+    <form action="/logout" method="get">
+        <button type="submit">Cerrar sesión</button>
+    </form>
+    <% } %>

@@ -87,7 +87,7 @@ const backLogin = async (req, res) => {
                 httpOnly: false,
                 maxAge: 1000 * 60 * 60 * 24
             });
-            
+
             //Redirigimos a una ruta que decide a dónde ir según el rol
             return res.redirect("/redirect-by-role");
         }
@@ -102,10 +102,11 @@ const backLogin = async (req, res) => {
 
 // CONTROLADOR: Logout
 const logout = (req, res) => {
-    res.clearCookie("token"); //Elimina la cookie
-    return res.redirect("/login"); //Redirige al login
-}
-
+    res.clearCookie("token");
+    res.clearCookie("userId");
+    res.clearCookie("userRole");
+    return res.redirect("/login");
+};
 
 
 

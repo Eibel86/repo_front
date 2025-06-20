@@ -1,7 +1,3 @@
-// IMPORTS
-const { apiFetch } = require("../utils/apiFetch");
-
-
 // ADMIN CONTROLLERS:
 // CONTROLADOR: admin/films (dashboard)  ---------------------------------------------- // 
 /* 

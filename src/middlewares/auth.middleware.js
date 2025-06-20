@@ -23,16 +23,41 @@ const redirectByRole = (req, res) => {
 // MIDDLEWARE: Verifica si el usuario tiene rol "admin"
 const authorizeAdmin = (req, res, next) => {
     if (req.user.role !== "admin") {
-        return res.status(403).send("Acceso denegado: no tienes permisos de administrador.");
+        return res.clearCookie("token").redirect("/login");
     }
     next();
 };
 
+const onlyAuth = (req, res, next) => {
+    const { userId, userRole } = req.cookies;
+    if (!userId || !userRole) return res.redirect("/login");
+
+    req.user = { id: userId, role: userRole };
+    next();
+};
+
+const onlyUsers = (req, res, next) => {
+    const { userRole } = req.cookies;
+    if (userRole === "user" || userRole === "admin") return next();
+
+    res.clearCookie("token");
+    return res.redirect("/login");
+};
 
 
-// EXPORTS
+const onlyAdmins = (req, res, next) => {
+    const { userRole } = req.cookies;
+    if (userRole === "admin") return next();
+
+    res.clearCookie("token");
+    return res.redirect("/login");
+};
+
 module.exports = {
     authenticate,
     redirectByRole,
-    authorizeAdmin
+    authorizeAdmin,
+    onlyAuth,
+    onlyUsers,
+    onlyAdmins
 };

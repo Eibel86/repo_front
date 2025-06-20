@@ -2,7 +2,7 @@
 const { Router } = require("express");
 const { adminDashboard, renderCreateFilm, createFilm } = require("../controllers/admin.controller")
 const router = new Router();
-const { authenticate, authorizeAdmin } = require("../middlewares/auth.middleware.js");
+const { onlyAuth, onlyAdmins } = require("../middlewares/auth.middleware");
 // TODO: Añadir multer aquí
 
 
@@ -10,7 +10,7 @@ const { authenticate, authorizeAdmin } = require("../middlewares/auth.middleware
 
 // RUTA: Directorio base
 //http://localhost:4000/admin
-router.get("/", [authenticate, authorizeAdmin], adminDashboard);
+router.get("/", [onlyAuth, onlyAdmins], adminDashboard);
 
 // RUTA: Mostrar formulario
 //http://localhost:4000/admin/createfilm

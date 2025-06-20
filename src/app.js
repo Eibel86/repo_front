@@ -14,6 +14,12 @@ const port = process.env.PORT || 4000;
 
 // MIDDLEWARES GLOBALES
 app.use(cookieParser());
+// 💡 Middleware para que todas las vistas tengan acceso a las cookies
+app.use((req, res, next) => {
+    res.locals.cookies = req.cookies;
+    next();
+});
+
 app.use(setUser);
 app.use(express.urlencoded({ extended: true })); // Middleware para parsear body
 app.use(express.json());
