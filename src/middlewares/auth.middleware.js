@@ -14,7 +14,7 @@ const authenticate = (req, res, next) => {
         return res.redirect("/login");
     }
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.PRIVATE_KEY_JWB);
         req.user = decoded; //nombre, id, email, role...
         next();
     } catch (error) {
@@ -27,7 +27,7 @@ const authenticate = (req, res, next) => {
 // MIDDLEWARE: Redireccionar por role
 const redirectByRole = (req, res) => {
     if (req.user.role === "user") return res.redirect("/films");
-    if (req.user.role === "admin") return res.redirect("/dashboard");
+    if (req.user.role === "admin") return res.redirect("/admin/dashboard");
     return res.redirect("/login");
 }
 

@@ -7,7 +7,7 @@
   <title>Crear una película</title>
 </head>
 
-<%- include("./partials/header") -%>
+<%- include("../partials/header") -%>
 
 <body>
     <header>
@@ -16,7 +16,7 @@
 
     <main>
         <!-- FORMULARIO: CREATE FILM ----------------------------------------------->
-        <form action="createfilm" method="POST" enctype="multipart/form-data">
+        <form action="createfilm" method="POST" enctype="multipart/form-data" novalidate> <!--Para enviar imgs Multer-->
 
             <%# INPUT: full_title %>
             <div>
@@ -69,5 +69,5 @@
 </body>
 
 
-<%- include("./partials/footer") -%>
+<%- include("../partials/footer") -%>
 </html>

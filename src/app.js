@@ -18,7 +18,7 @@ app.use(express.json());
 
 // CONFIGURACIÓN DE VISTAS (EJS)
 app.set("view engine", "ejs");
-console.log(`${__dirname}/views`)
+console.log(__dirname+'/views') //Comprobación de ruta
 app.set("views", `${__dirname}/views`);
 
 
@@ -28,7 +28,7 @@ app.use(express.static(`${__dirname}/public`));
 
 // RUTAS 
 app.use("/", authRoutes)
-app.use("/dashboard", dashboardRoutes)
+app.use("/admin", dashboardRoutes)
 app.use("/films", filmsRoutes)
 
 
