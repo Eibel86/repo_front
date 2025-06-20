@@ -23,16 +23,14 @@ const redirectByRole = (req, res) => {
 // MIDDLEWARE: Verifica si el usuario tiene rol "admin"
 const authorizeAdmin = (req, res, next) => {
     if (req.user.role !== "admin") {
-        return res.clearCookie("token").redirect("/login");
+        // Eliminar cookies
+        res.clearCookie("token");
+        res.clearCookie("userId");
+        res.clearCookie("userRole");
+
+        // Redirigir al login
+        return res.redirect("/login");
     }
-    next();
-};
-
-const onlyAuth = (req, res, next) => {
-    const { userId, userRole } = req.cookies;
-    if (!userId || !userRole) return res.redirect("/login");
-
-    req.user = { id: userId, role: userRole };
     next();
 };
 
@@ -41,6 +39,8 @@ const onlyUsers = (req, res, next) => {
     if (userRole === "user" || userRole === "admin") return next();
 
     res.clearCookie("token");
+    res.clearCookie("userId");
+    res.clearCookie("userRole");
     return res.redirect("/login");
 };
 
@@ -50,6 +50,8 @@ const onlyAdmins = (req, res, next) => {
     if (userRole === "admin") return next();
 
     res.clearCookie("token");
+    res.clearCookie("userId");
+    res.clearCookie("userRole");
     return res.redirect("/login");
 };
 
@@ -57,7 +59,6 @@ module.exports = {
     authenticate,
     redirectByRole,
     authorizeAdmin,
-    onlyAuth,
     onlyUsers,
     onlyAdmins
 };
