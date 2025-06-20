@@ -1,19 +1,38 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8" />
-    <title>Admin Dashboard Films</title>
-</head>
+<%- include('../templates/header') %>
 
-<%- include("../partials/header") -%>
 
-<body>
-    <h1>Admin Dashboard Films</h1>
 
-    <main>
+   
+
+    <main class="container">
+         <h1>Admin Dashboard Films</h1>
+         <hr>
+         <div>
+            <a href="createfilm" class="btn btn-dark">Crear Película</a>
+         </div>
+
+        <% if (!ok) { %>
+            <p><%= {msg} %></p>
+        <% } %>
+
+        <% if (!data && data.length<=0) { %>
+            <p>No hay peliculas que mostrar</p>
+
+            <% } else { %>
+                <section>
+
+                <% data.forEach(element => { %>
+                    <article>
+                        <h2><%= element.full_title %></h2>
+                    </article>
+                <% }) %>
+
+                </section>
+             
+         
+        <% } %>
+        
 
     </main>
-</body>
 
-<%- include("../partials/footer") -%>
-</html>
+<%- include('../templates/footer') %>

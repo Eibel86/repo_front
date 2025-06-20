@@ -9,33 +9,60 @@ const { apiFetch } = require("../utils/apiFetch");
     -> Incluye botón de crear película
 */
 const adminDashboard = async (req, res) => {
-    res.status(200).render("admin/adminDashboard")
+    console.log('entraen admin dashboard')
+    const endpoint = process.env.URL_BASE_BACK + "api/v1/allfilms"
+
+    //TODO: recoger token de kookies
+    try {
+        //TODO: Pasar token en el header de la consulta
+        const result = await apiFetch(endpoint, "GET", {/*header */})
+        // console.log(result)
+        res.render("admin/adminDashboard",{
+            ...result
+        })
+        
+    } catch (error) {
+        res.send('error')
+    }
+    
 }
+//ruta que elimina
+const deleteFilm=async(req,res)=>{
+
+}
+
+//ruta qeu muestra mensaje de confirmación
+
+//vista editar pelicula GET (formulario) recoger los datos de la pelicula por su id
+
+//ruta post que envia los datos del formujlario a la api updateFilm
 
 
 
 
 
 // CONTROLADOR: admin/createfilm ----------------------------------------------------- // 
-// CONTROLADOR: renderizar vista de creación de películas.
+// CONTROLADOR: renderizar vista de creación de películas. /GET
+// El formulario manda los datos por POST a la ruta admin/createfilm con el controlador createFilm
+
 const renderCreateFilm = async (req, res) => {
-    res.status(200).render("admin/adminCreateFilm");
+    res.render("admin/adminCreateFilm");
 };
 
 
 // RUTA BACK: http://localhost:5000/api/v1/createfilm
 // CONTROLADOR: procesa el formulario de creación de películas.
 const createFilm = async (req, res) => {
+
     const endpoint = process.env.URL_BASE_BACK + "api/v1/createfilm"
-    console.log(req.body.full_title)
-    console.log("Datos recibidos:", req.body);
-    console.log("Archivo recibido:", req.file);
+ 
     //todo: obtener de la cookie el token y añadirselo al header
     //despues actualizar el token de la cookie con la respuesta
     try {
         // Comprobaciones en consola
-            console.log("Datos recibidos:", req.body);
+             console.log("Datos recibidos:", req.body);
             console.log("Archivo recibido:", req.file);
+
         const result = await apiFetch(endpoint, "POST", {},  { 
             full_title : req.body.full_title,
             director_name : req.body.director_name,
@@ -45,30 +72,26 @@ const createFilm = async (req, res) => {
             image: req.body.image,
             synopsis : req.body.synopsis
         })
-        
-        return res.render("admin/adminDashboard"); //Redirigir al adminDashboard
 
+        if(result.ok){
+             res.redirect("dashboard"); //Redirigir al adminDashboard
+
+        }else{
+            
+            //gestiono la 
+            /*
+            res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
+            */
+        }
+        
+        
     } catch (error) {
         console.log(error)
-        return res.render("admin/adminError"); //Redirige al adminError
+         res.redirect("admin/adminError"); //Redirige al adminError
     }
 };
 
 // GET ALL FILMS
-const renderAllFilms = async (req, res) => {
-    try{
-        
-
-         res.render("admin/adminDashboard",{
-
-         });
-
-    }catch{
-
-    }
-
-   
-};
 
 
 
@@ -77,5 +100,5 @@ const renderAllFilms = async (req, res) => {
 module.exports = {
     adminDashboard,
     renderCreateFilm,
-    createFilm
+    createFilm,
 }

@@ -36,7 +36,7 @@ const backRegistry = async (req, res) => {
                 email: req.body.email,
                 password: req.body.password
             });
-        console.log(result); //Muestra en consola la respuesta del back (msj o token)
+        console.log('backRegistry',result); //Muestra en consola la respuesta del back (msj o token)
         res.status(200).render("auth/login"); //Redirige al usuario a la página de login si el registro fue exitoso
 
     } catch (error) {
