@@ -55,10 +55,20 @@ const onlyAdmins = (req, res, next) => {
     return res.redirect("/login");
 };
 
+const redirectIfAuthenticated = (req, res, next) => {
+    const { userRole } = req.cookies;
+
+    if (userRole === "user") return res.redirect("/films");
+    if (userRole === "admin") return res.redirect("/dashboard");
+
+    next();
+};
+
 module.exports = {
     authenticate,
     redirectByRole,
     authorizeAdmin,
     onlyUsers,
-    onlyAdmins
+    onlyAdmins,
+    redirectIfAuthenticated
 };

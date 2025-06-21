@@ -9,23 +9,23 @@
 
 <%- include("../partials/header") -%>
     <h1>Registro</h1>
-    <form method="POST" action="/registry">
+    <form method="POST" action="/registry" novalidate>
 
-        <input type="text" name="name" placeholder="Nombre">
+        <input type="text" name="name" placeholder="Nombre" required>
         <% if (errors && errors.name) { %>
             <p class="error">
                 <%= errors.name %>
             </p>
             <% } %>
 
-                <input type="email" name="email" placeholder="Email">
+                <input type="email" name="email" placeholder="Email" required>
                 <% if (errors && errors.email) { %>
                     <p class="error">
                         <%= errors.email %>
                     </p>
                     <% } %>
 
-                        <input type="password" name="password" placeholder="Contraseña">
+                        <input type="password" name="password" placeholder="Contraseña" required>
                         <% if (errors && errors.password) { %>
                             <p class="error">
                                 <%= errors.password %>

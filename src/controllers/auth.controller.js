@@ -44,6 +44,16 @@ const backRegistry = async (req, res) => {
                 secure: false,
                 maxAge: 1000 * 60 * 60 * 24,
             });
+            res.cookie("userId", result.user.id, {
+                httpOnly: false,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+            res.cookie("userRole", result.user.role, {
+                httpOnly: false,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
             //Esto lo podemos probar a redirigir a films
             return res.redirect("/redirect-by-role");  // middleware para redirigir según rol
         }
