@@ -13,11 +13,9 @@ const apiFetch = async (url, method = "GET", header = {}, body = {}) => {
         options.method = method;
     }
     try {
-        console.log({ url })
-        console.log({ options })
         const result = await fetch(url, options);
         if (result.ok) {
-            return await result.json()
+            return await result.json();
         } else {
             throw await result.json();
         }

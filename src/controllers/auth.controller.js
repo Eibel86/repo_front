@@ -12,7 +12,7 @@ const { apiFetch } = require("../utils/apiFetch");
  * @returns Renderiza la plantilla "registry".
  */
 const registry = async (req, res) => {
-    res.status(200).render("auth/registry"); //Renderiza la vista 'registry' (formulario de registro)
+    res.status(200).render("auth/registry", { errors: {} }); //Renderiza la vista 'registry' (formulario de registro)
 };
 // CONTROLADOR: Registro en backend
 /**
@@ -25,33 +25,54 @@ const registry = async (req, res) => {
  * @returns Redirige a login si tiene éxito, o vuelve a registry si hay error.
  */
 const backRegistry = async (req, res) => {
+
     const endpoint = process.env.URL_BASE_BACK + "/auth/registry"; //Construye la URL completa del endpoint externo de registro
+
     try {
-        const result = await apiFetch( //Envía los datos del usuario al backend usando una función helper (apiFetch)
-            endpoint,   //URL
-            "POST",     //Método
-            {},         //Headers (vacíos en este caso)
-            {           //Cuerpo de la petición con datos del formulario
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password
+        const result = await apiFetch(endpoint, "POST", {}, {
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        });
+
+        console.log("Resultado registro backend:", result);
+
+        // Asumimos que result tiene el token
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
             });
-        console.log(result); //Muestra en consola la respuesta del back (msj o token)
-        res.status(200).render("auth/login"); //Redirige al usuario a la página de login si el registro fue exitoso
+            //Esto lo podemos probar a redirigir a films
+            return res.redirect("/redirect-by-role");  // middleware para redirigir según rol
+        }
 
+        // Si no viene token, renderizar registro con error
+        return res.status(400).render("auth/registry", { error: "No se pudo registrar correctamente" });
     } catch (error) {
+        // 👇 Mapear los mensajes desde el objeto `errores`
         console.log(error);
-        res.status(200).render("auth/registry"); //Vuelve a mostrar el formulario de registro al usuario
-    }
-}
+        const errors = {};
 
+        if (error.errores) {
+            for (const field in error.errores) {
+                errors[field] = error.errores[field].msg;
+            }
+        } else {
+            errors.general = error.error || "Error inesperado";
+        }
+
+        return res.status(400).render("auth/registry", { errors });
+    }
+};
 
 // CONTROLADOR: Login
 const login = async (req, res) => {
     //TODO: mirar en la cookie si hay token, y si lo hay redireccionar dependiendo el rol y si no renderizar el login
-    res.status(200).render("auth/login")
+    res.status(200).render("auth/login", { errors: {} });
 
-}
+};
 
 
 // CONTROLADOR: Login en backend
@@ -69,23 +90,47 @@ const backLogin = async (req, res) => {
                 secure: false, //Cambiar a true si usamos HTTPS
                 maxAge: 1000 * 60 * 60 * 24 //1 día 
             });
+
+            // Guarda los datos en cookies accesibles desde JS
+            res.cookie("userId", result.user.id, {
+                httpOnly: false,
+                maxAge: 1000 * 60 * 60 * 24
+            });
+            res.cookie("userRole", result.user.role, {
+                httpOnly: false,
+                maxAge: 1000 * 60 * 60 * 24
+            });
+
             //Redirigimos a una ruta que decide a dónde ir según el rol
             return res.redirect("/redirect-by-role");
         }
 
-        res.status(200).render("auth/login");
+        // Usuario no válido o error de login
+        res.status(401).render("auth/login", { error: "Credenciales inválidas" });
     } catch (error) {
-        console.log(error)
-        res.status(200).render("auth/login");
+        // 👇 Mapear los mensajes desde el objeto `errores`
+        const errors = {};
+        console.log(error);
+
+        if (error.errores) {
+            for (const field in error.errores) {
+                errors[field] = error.errores[field].msg;
+            }
+        } else {
+            errors.general = error.error || "Error inesperado";
+        }
+
+        return res.status(400).render("auth/login", { errors });
     }
 };
 
 // CONTROLADOR: Logout
 const logout = (req, res) => {
-    res.clearCookie("token"); //Elimina la cookie
-    return res.redirect("auth/login"); //Redirige al login
-}
-
+    res.clearCookie("token");
+    res.clearCookie("userId");
+    res.clearCookie("userRole");
+    return res.redirect("/login");
+};
 
 
 

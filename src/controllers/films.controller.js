@@ -1,9 +1,9 @@
+
 const { apiFetch } = require("../utils/apiFetch");
 
 
 const films = async (req, res) => {
     res.status(200).render("user/films", { films: {} })
-
 }
 
 const getFilmsByTitle = async (req, res) => {
