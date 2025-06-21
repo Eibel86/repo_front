@@ -19,8 +19,7 @@ const apiFetch = async (url, method = "GET", header = {}, body = {}) => {
         if (result.ok) {
             return await result.json()
         } else {
-            console.log({ result })
-            throw "invalid result";
+            throw await result.json();
         }
     } catch (error) {
         throw error;

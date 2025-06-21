@@ -3,8 +3,18 @@
     <h2>
         <%= film.full_title %>
     </h2>
-    <form action="/films/addFavourite/<%= film.film_id %>" method="POST" class="d-inline">
-        <button type="submit" class="btn btn-primary">Añadir a Favoritos</button>
-    </form>
-    <!-- crear un endpoint para favoritos, crear controlador, pasarle la id desde aqui y pillar el del usuario desde las cookies -->
+
+    <% if (showFavouriteButton) { %>
+        <% if (!favouritesFilmId.includes(film.film_id)) { %>
+            <form action="/films/addFavourite" method="POST">
+                <input type="hidden" name="filmId" value="<%= film.film_id %>">
+                <button type="submit">Añadir a Favoritos</button>
+            </form>
+            <% } else { %>
+                <form action="/films/deleteFavourite" method="POST">
+                    <input type="hidden" name="filmId" value="<%= film.film_id %>">
+                    <button type="submit">Eliminar de Favoritos</button>
+                </form>
+                <% } %>
+                    <% } %>
 </div>
