@@ -15,19 +15,19 @@ const adminDashboard = async (req, res) => {
     //TODO: recoger token de kookies
     try {
         //TODO: Pasar token en el header de la consulta
-        const result = await apiFetch(endpoint, "GET", {/*header */})
+        const result = await apiFetch(endpoint, "GET", {/*header */ })
         // console.log(result)
-        res.render("admin/adminDashboard",{
+        res.render("admin/adminDashboard", {
             ...result
         })
-        
+
     } catch (error) {
         res.send('error')
     }
-    
+
 }
 //ruta que elimina
-const deleteFilm=async(req,res)=>{
+const deleteFilm = async (req, res) => {
 
 }
 
@@ -54,40 +54,33 @@ const renderCreateFilm = async (req, res) => {
 // CONTROLADOR: procesa el formulario de creación de películas.
 const createFilm = async (req, res) => {
 
-    const endpoint = process.env.URL_BASE_BACK + "api/v1/createfilm"
- 
+    const endpoint = process.env.URL_BASE_BACK + "/api/v1/createfilm"
+
     //todo: obtener de la cookie el token y añadirselo al header
     //despues actualizar el token de la cookie con la respuesta
     try {
-        // Comprobaciones en consola
-             console.log("Datos recibidos:", req.body);
-            console.log("Archivo recibido:", req.file);
+        const result = await fetch(endpoint, {
+            method: "POST",
+            headers: req.headers,
+            body: req,
+            duplex: 'half'
+        });
 
-        const result = await apiFetch(endpoint, "POST", {},  { 
-            full_title : req.body.full_title,
-            director_name : req.body.director_name,
-            genre_name : req.body.genre_name,
-            release_date : req.body.release_date,
-            duration : req.body.duration,
-            image: req.body.image,
-            synopsis : req.body.synopsis
-        })
+        if (result.ok) {
+            res.redirect("dashboard"); //Redirigir al adminDashboard
 
-        if(result.ok){
-             res.redirect("dashboard"); //Redirigir al adminDashboard
+        } else {
 
-        }else{
-            
             //gestiono la 
             /*
             res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
             */
         }
-        
-        
+
+
     } catch (error) {
         console.log(error)
-         res.redirect("admin/adminError"); //Redirige al adminError
+        res.redirect("admin/adminError"); //Redirige al adminError
     }
 };
 
