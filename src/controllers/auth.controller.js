@@ -69,14 +69,15 @@ const backLogin = async (req, res) => {
                 secure: false, //Cambiar a true si usamos HTTPS
                 maxAge: 1000 * 60 * 60 * 24 //1 día 
             });
+            console.log({result})
             //Redirigimos a una ruta que decide a dónde ir según el rol
             return res.redirect("/redirect-by-role");
         }
 
-        res.status(200).render("login");
+        res.render("login");
     } catch (error) {
         console.log(error)
-        res.status(200).render("login");
+        res.render("login");
     }
 };
 

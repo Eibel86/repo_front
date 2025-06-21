@@ -1,6 +1,8 @@
 const { apiFetch } = require("../utils/apiFetch");
+
+
 const films = async (req, res) => {
-    res.status(200).render("films")
+    res.render("films")
 
 }
 module.exports = {
