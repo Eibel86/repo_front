@@ -12,7 +12,7 @@ const { apiFetch } = require("../utils/apiFetch");
  * @returns Renderiza la plantilla "registry".
  */
 const registry = async (req, res) => {
-    res.status(200).render("auth/registry"); //Renderiza la vista 'registry' (formulario de registro)
+    res.status(200).render("auth/registry", { errors: {} }); //Renderiza la vista 'registry' (formulario de registro)
 };
 // CONTROLADOR: Registro en backend
 /**
@@ -49,17 +49,28 @@ const backRegistry = async (req, res) => {
         // Si no viene token, renderizar registro con error
         return res.status(400).render("auth/registry", { error: "No se pudo registrar correctamente" });
     } catch (error) {
-        console.error(error);
-        return res.status(500).render("auth/registry", { error: "Error en el servidor" });
+        // 👇 Mapear los mensajes desde el objeto `errores`
+        console.log(error);
+        const errors = {};
+
+        if (error.errores) {
+            for (const field in error.errores) {
+                errors[field] = error.errores[field].msg;
+            }
+        } else {
+            errors.general = error.error || "Error inesperado";
+        }
+
+        return res.status(400).render("auth/registry", { errors });
     }
 };
 
 // CONTROLADOR: Login
 const login = async (req, res) => {
     //TODO: mirar en la cookie si hay token, y si lo hay redireccionar dependiendo el rol y si no renderizar el login
-    res.status(200).render("auth/login")
+    res.status(200).render("auth/login", { errors: {} });
 
-}
+};
 
 
 // CONTROLADOR: Login en backend
@@ -93,10 +104,21 @@ const backLogin = async (req, res) => {
         }
 
         // Usuario no válido o error de login
-        res.status(200).render("auth/login", { error: "Credenciales inválidas" });
+        res.status(401).render("auth/login", { error: "Credenciales inválidas" });
     } catch (error) {
+        // 👇 Mapear los mensajes desde el objeto `errores`
+        const errors = {};
         console.log(error);
-        res.status(200).render("auth/login", { error: "password o email invalidos" });
+
+        if (error.errores) {
+            for (const field in error.errores) {
+                errors[field] = error.errores[field].msg;
+            }
+        } else {
+            errors.general = error.error || "Error inesperado";
+        }
+
+        return res.status(400).render("auth/login", { errors });
     }
 };
 
