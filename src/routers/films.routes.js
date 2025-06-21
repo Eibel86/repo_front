@@ -10,8 +10,5 @@ router.get("/", films);
 // SAMPLE: router.get("/films", authenticate, filmsController);
 
 
-
-
-
 // EXPORTS 
 module.exports = router;
