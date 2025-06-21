@@ -1,10 +1,95 @@
+
+const { apiFetch } = require("../utils/apiFetch");
+
 const { apiFetch } = require("../utils/apiFetch");
 
 
 const films = async (req, res) => {
-    res.render("films")
+    res.status(200).render("user/films", { films: {} })
+}
 
+const getFilmsByTitle = async (req, res) => {
+    try {
+        const { title } = req.body
+        const userId = req.cookies.userId;
+        const result = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/film/search/${title}`);
+        const favsResult = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/getFavourites/${userId}`);
+        const favouritesFilmId = favsResult.favourites.map(element => element.film_id);
+        console.log(favouritesFilmId)
+        return res.render("user/films", { films: result.data, backendUrl: process.env.URL_BASE_BACK, favouritesFilmId, showFavouriteButton: true })
+    } catch (error) {
+        console.log(error)
+        return res.render("user/films", { films: {} })
+    }
 }
+
+
+const addFavourite = async (req, res) => {
+    try {
+        const { filmId } = req.body;
+        const userId = req.cookies.userId;
+        const endPoint = process.env.URL_BASE_BACK + "/api/v1/addFavourite";
+        const result = await apiFetch(
+            endPoint,
+            "POST",
+            {},
+            {
+                userId,
+                filmId
+            });
+        return res.send("favorito agregado");
+    } catch (error) {
+
+        console.log(error)
+
+        return res.send(error.msg);
+    }
+}
+
+
+const deleteFavourite = async (req, res) => {
+    try {
+        const { filmId } = req.body;
+        const userId = req.cookies.userId;
+        const endPoint = process.env.URL_BASE_BACK + "/api/v1/deleteFavourite";
+        const result = await apiFetch(
+            endPoint,
+            "POST",
+            {},
+            {
+                userId,
+                filmId
+            });
+        return res.send("favorito eliminado");
+    } catch (error) {
+
+        console.log(error)
+
+        return res.send(error.msg);
+    }
+}
+
+
+const favouriteFilms = async (req, res) => {
+    try {
+
+        const userId = req.cookies.userId;
+        const result = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/getFavourites/${userId}`);
+        const favouritesFilmId = result.favourites.map(element => element.film_id);
+        console.log(result)
+        return res.render("user/favourites", { films: result.favourites, backendUrl: process.env.URL_BASE_BACK, favouritesFilmId, showFavouriteButton: true })
+    } catch (error) {
+        console.log(error)
+        return res.render("user/favourites", { films: {} })
+    }
+}
+
 module.exports = {
-    films
+    films,
+    getFilmsByTitle,
+    addFavourite,
+    deleteFavourite,
+    favouriteFilms
 }
+
+

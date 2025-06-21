@@ -1,7 +1,3 @@
-// IMPORTS
-const { apiFetch } = require("../utils/apiFetch");
-
-
 // ADMIN CONTROLLERS:
 // CONTROLADOR: admin/films (dashboard)  ---------------------------------------------- // 
 /* 
@@ -9,6 +5,7 @@ const { apiFetch } = require("../utils/apiFetch");
     -> Incluye botón de crear película
 */
 const adminDashboard = async (req, res) => {
+
     console.log('entraen admin dashboard')
     const endpoint = process.env.URL_BASE_BACK + "api/v1/allfilms"
 
@@ -25,12 +22,11 @@ const adminDashboard = async (req, res) => {
         res.send('error')
     }
 
-}
-//ruta que elimina
-const deleteFilm = async (req, res) => {
+    //ruta que elimina
+    const deleteFilm = async (req, res) => {
 
+    }
 }
-
 //ruta qeu muestra mensaje de confirmación
 
 //vista editar pelicula GET (formulario) recoger los datos de la pelicula por su id
@@ -82,7 +78,8 @@ const createFilm = async (req, res) => {
         console.log(error)
         res.redirect("admin/adminError"); //Redirige al adminError
     }
-};
+
+}
 
 // GET ALL FILMS
 
@@ -93,5 +90,5 @@ const createFilm = async (req, res) => {
 module.exports = {
     adminDashboard,
     renderCreateFilm,
-    createFilm,
+    createFilm
 }

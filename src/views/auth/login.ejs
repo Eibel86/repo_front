@@ -6,12 +6,31 @@
     <title> First front</title>
 </head>
 
-<%- include("../templates/header") -%>
+
+<%- include("../partials/header") -%>
     <h1>login</h1>
-    <form action="/login" method="post">
-        <input name="email">
-        <input name="password">
-        <input type="submit">
+
+    <form method="POST" action="/login" novalidate>
+
+        <input type="email" name="email" placeholder="Email">
+        <% if (errors && errors.email) { %>
+            <p class="error">
+                <%= errors.email %>
+            </p>
+            <% } %>
+
+                <input type="password" name="password" placeholder="Password">
+                <% if (errors && errors.password) { %>
+                    <p class="error">
+                        <%= errors.password %>
+                    </p>
+                    <% } %>
+
+                        <% if (errors && errors.general) { %>
+                            <p class="error">
+                                <%= errors.general %>
+                            </p>
+                            <% } %>
+
+                                <button type="submit">Login</button>
     </form>
-    
-<%- include("../templates/footer") -%>

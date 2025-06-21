@@ -3,12 +3,7 @@ const { Router } = require("express");
 const { adminDashboard, renderCreateFilm, createFilm } = require("../controllers/admin.controller")
 const router = new Router();
 
-
-
-// RUTA: Admin dashboard
-//http://localhost:4000/dashboard/admin
-router.get("/dashboard", adminDashboard);
-
+router.get("/", [authenticate, authorizeAdmin], adminDashboard);
 // RUTA: Mostrar formulario
 //http://localhost:4000/dashboard/admin/createfilm
 router.get("/createfilm", renderCreateFilm);

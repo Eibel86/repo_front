@@ -1,0 +1,20 @@
+<div class="card">
+    <img src="<%= backendUrl %>/<%= film.image_url %>" alt="Imagen de <%= film.full_title %>">
+    <h2>
+        <%= film.full_title %>
+    </h2>
+
+    <% if (showFavouriteButton) { %>
+        <% if (!favouritesFilmId.includes(film.film_id)) { %>
+            <form action="/films/addFavourite" method="POST">
+                <input type="hidden" name="filmId" value="<%= film.film_id %>">
+                <button type="submit">Añadir a Favoritos</button>
+            </form>
+            <% } else { %>
+                <form action="/films/deleteFavourite" method="POST">
+                    <input type="hidden" name="filmId" value="<%= film.film_id %>">
+                    <button type="submit">Eliminar de Favoritos</button>
+                </form>
+                <% } %>
+                    <% } %>
+</div>

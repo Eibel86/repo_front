@@ -6,7 +6,12 @@
     <title> First front</title>
 </head>
 
-<%- include("./partials/header") -%>
-    <h1>films</h1>
+<%- include("../partials/header") -%>
 
-    <%- include("./partials/footer") -%>
+    <h1>Películas</h1>
+
+    <form action="/films/searchFilmsByTitle" method="POST">
+        <input type="text" name="title">
+        <input type="submit" value="Buscar">
+    </form>
+    <%- include("../partials/cardContainer")%>

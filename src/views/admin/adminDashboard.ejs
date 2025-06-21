@@ -1,38 +1,37 @@
 <%- include('../templates/header') %>
-
-
-
-   
-
     <main class="container">
-         <h1>Admin Dashboard Films</h1>
-         <hr>
-         <div>
+        <h1>Admin Dashboard Films</h1>
+        <hr>
+        <div>
             <a href="createfilm" class="btn btn-dark">Crear Película</a>
-         </div>
+        </div>
 
         <% if (!ok) { %>
-            <p><%= {msg} %></p>
-        <% } %>
+            <p>
+                <%= {msg} %>
+            </p>
+            <% } %>
 
-        <% if (!data && data.length<=0) { %>
-            <p>No hay peliculas que mostrar</p>
+                <% if (!data && data.length<=0) { %>
+                    <p>No hay peliculas que mostrar</p>
 
-            <% } else { %>
-                <section>
+                    <% } else { %>
+                        <section>
 
-                <% data.forEach(element => { %>
-                    <article>
-                        <h2><%= element.full_title %></h2>
-                    </article>
-                <% }) %>
+                            <% data.forEach(element=> { %>
+                                <article>
+                                    <h2>
+                                        <%= element.full_title %>
+                                    </h2>
+                                </article>
+                                <% }) %>
 
-                </section>
-             
-         
-        <% } %>
-        
+                        </section>
+
+
+                        <% } %>
+
 
     </main>
 
-<%- include('../templates/footer') %>
+    <%- include('../templates/footer') %>

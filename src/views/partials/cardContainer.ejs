@@ -1,0 +1,9 @@
+<% if (films && films.length> 0) { %>
+    <% films.forEach(film=> { %>
+        <%- include("../partials/card", { film }) %>
+            <% }) %>
+                <% } else { %>
+                    <p>No se encontraron películas.</p>
+                    <% } %>
+
+                        <%- include("../partials/footer") -%>
