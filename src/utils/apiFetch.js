@@ -13,13 +13,11 @@ const apiFetch = async (url, method = "GET", header = {}, body = {}) => {
         options.method = method;
     }
     try {
-
         const result = await fetch(url, options);
         if (result.ok) {
-            return await result.json()
+            return await result.json();
         } else {
-            console.log({ result })
-            throw "invalid result";
+            throw await result.json();
         }
     } catch (error) {
         throw error;

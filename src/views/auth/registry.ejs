@@ -9,10 +9,34 @@
 
 <%- include("../partials/header") -%>
     <h1>Registro</h1>
-    <form action="/registry" method="post">
-        <input name="name" type="text" placeholder="Nombre" required>
-        <input name="email" type="email" placeholder="Email" required>
-        <input name="password" type="password" placeholder="Contraseña" required>
-        <input type="submit" value="Registrarse">
+    <form method="POST" action="/registry">
+
+        <input type="text" name="name" placeholder="Nombre">
+        <% if (errors && errors.name) { %>
+            <p class="error">
+                <%= errors.name %>
+            </p>
+            <% } %>
+
+                <input type="email" name="email" placeholder="Email">
+                <% if (errors && errors.email) { %>
+                    <p class="error">
+                        <%= errors.email %>
+                    </p>
+                    <% } %>
+
+                        <input type="password" name="password" placeholder="Contraseña">
+                        <% if (errors && errors.password) { %>
+                            <p class="error">
+                                <%= errors.password %>
+                            </p>
+                            <% } %>
+
+                                <% if (errors && errors.general) { %>
+                                    <p class="error">
+                                        <%= errors.general %>
+                                    </p>
+                                    <% } %>
+
+                                        <button type="submit">Registrarse</button>
     </form>
-    <%- include("../partials/footer") -%>
