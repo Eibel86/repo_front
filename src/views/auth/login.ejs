@@ -15,9 +15,9 @@
         <% } %>
 
             <form action="login" method="post">
-                <input name="email">
-                <input name="password">
-                <input type="submit">
+                <input name="email" type="email" placeholder="Email" required>
+                <input name="password" type="password" placeholder="Contraseña" required>
+                <input type="submit" value="Login">
             </form>
 
             <%- include("../partials/footer") -%>
