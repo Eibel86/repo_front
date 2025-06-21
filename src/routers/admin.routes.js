@@ -1,7 +1,10 @@
 // IMPORTS:
 const { Router } = require("express");
 const { adminDashboard, renderCreateFilm, createFilm } = require("../controllers/admin.controller")
+const { authenticate, authorizeAdmin } = require("../middlewares/auth.middleware");
 const router = new Router();
+
+
 
 router.get("/", [authenticate, authorizeAdmin], adminDashboard);
 // RUTA: Mostrar formulario

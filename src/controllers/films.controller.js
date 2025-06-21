@@ -1,6 +1,3 @@
-
-const { apiFetch } = require("../utils/apiFetch");
-
 const { apiFetch } = require("../utils/apiFetch");
 
 
