@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="es">
+<%- include('../templates/header') %>
+    <main class="container">
+        <h1>Admin Dashboard Films</h1>
+        <hr>
+        <div>
+            <a href="createfilm" class="btn btn-dark">Crear Película</a>
+        </div>
 
-<head>
-    <meta charset="UTF-8">
-    <title> Admin dashboard</title>
-</head>
+        <section>
 
-<%- include("../partials/header") -%>
-    <h1>Admin dashboard</h1>
+            <%- include("../partials/cardContainer")%>
 
-    <%- include("../partials/footer") -%>
+        </section>
+
+
+    </main>
+
+    <%- include('../templates/footer') %>

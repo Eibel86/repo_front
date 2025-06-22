@@ -12,6 +12,7 @@ const { apiFetch } = require("../utils/apiFetch");
  * @returns Renderiza la plantilla "registry".
  */
 const registry = async (req, res) => {
+
     res.status(200).render("auth/registry", { errors: {} }); //Renderiza la vista 'registry' (formulario de registro)
 };
 // CONTROLADOR: Registro en backend
@@ -58,12 +59,15 @@ const backRegistry = async (req, res) => {
             return res.redirect("/redirect-by-role");  // middleware para redirigir según rol
         }
 
+
         // Si no viene token, renderizar registro con error
         return res.status(400).render("auth/registry", { error: "No se pudo registrar correctamente" });
     } catch (error) {
         // 👇 Mapear los mensajes desde el objeto `errores`
         console.log(error);
+
         const errors = {};
+
 
         if (error.errores) {
             for (const field in error.errores) {
@@ -80,7 +84,9 @@ const backRegistry = async (req, res) => {
 // CONTROLADOR: Login
 const login = async (req, res) => {
     //TODO: mirar en la cookie si hay token, y si lo hay redireccionar dependiendo el rol y si no renderizar el login
+
     res.status(200).render("auth/login", { errors: {} });
+
 
 };
 
@@ -101,6 +107,7 @@ const backLogin = async (req, res) => {
                 maxAge: 1000 * 60 * 60 * 24 //1 día 
             });
 
+
             // Guarda los datos en cookies accesibles desde JS
             res.cookie("userId", result.user.id, {
                 httpOnly: false,
@@ -114,6 +121,7 @@ const backLogin = async (req, res) => {
             //Redirigimos a una ruta que decide a dónde ir según el rol
             return res.redirect("/redirect-by-role");
         }
+
 
         // Usuario no válido o error de login
         res.status(401).render("auth/login", { error: "Credenciales inválidas" });
@@ -131,6 +139,7 @@ const backLogin = async (req, res) => {
         }
 
         return res.status(400).render("auth/login", { errors });
+
     }
 };
 
