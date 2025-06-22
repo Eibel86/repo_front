@@ -12,11 +12,13 @@ const adminDashboard = async (req, res) => {
     console.log('entraen admin dashboard')
     const endpoint = process.env.URL_BASE_BACK + "/api/v1/allfilms"
 
-    //TODO: recoger token de kookies
     try {
-        //TODO: Pasar token en el header de la consulta
-        const result = await apiFetch(endpoint, "GET", {/*header */ })
-        // console.log(result)
+        const result = await apiFetch(endpoint, "GET", { "Authorization": `Bearer ${req.cookies.token}` })
+        res.cookie("token", result.token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24,
+        });
         res.render("admin/adminDashboard", {
             films: result.data,
             backendUrl: process.env.URL_BASE_BACK,
@@ -43,8 +45,12 @@ const deleteFilm = async (req, res) => {
             endpoint,
             "DELETE",
             { "Authorization": `Bearer ${req.cookies.token}` })
-
-        res.send("delete film")
+        res.cookie("token", result.token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24,
+        });
+        res.redirect("dashboard");
     } catch (error) {
         console.log(error)
         res.send("error")
@@ -69,12 +75,10 @@ const createFilm = async (req, res) => {
 
     const endpoint = process.env.URL_BASE_BACK + "/api/v1/createfilm"
 
-    //todo: obtener de la cookie el token y añadirselo al header
-    //despues actualizar el token de la cookie con la respuesta
     try {
         const result = await fetch(endpoint, {
             method: "POST",
-            headers: req.headers,
+            headers: { ...req.headers, "Authorization": `Bearer ${req.cookies.token}` },
             body: req,
             duplex: 'half'
         });
@@ -83,7 +87,8 @@ const createFilm = async (req, res) => {
             res.redirect("dashboard"); //Redirigir al adminDashboard
 
         } else {
-
+            console.log(await result.json())
+            res.render("admin/adminCreateFilm");
             //gestiono la 
             /*
             res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
@@ -93,7 +98,7 @@ const createFilm = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.redirect("admin/adminError"); //Redirige al adminError
+        res.redirect("dashboard");
     }
 
 }
@@ -106,13 +111,17 @@ const editFilm = async (req, res) => {
             endpoint,
             "GET",
             { "Authorization": `Bearer ${req.cookies.token}` })
-        console.log(result);
+        res.cookie("token", result.token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24,
+        });
         res.render("admin/adminEditFilm", {
             film: result.data
         });
     } catch (error) {
         console.log(error)
-        res.send(error)
+        res.redirect("dashboard");
     }
 
 
@@ -127,7 +136,7 @@ const editFilmProxy = async (req, res) => {
     try {
         const result = await fetch(endpoint, {
             method: "POST",
-            headers: req.headers,
+            headers: { ...req.headers, "Authorization": `Bearer ${req.cookies.token}` },
             body: req,
             duplex: 'half'
         });
@@ -137,10 +146,10 @@ const editFilmProxy = async (req, res) => {
             res.redirect("dashboard"); //Redirigir al adminDashboard
 
         } else {
-            console.log("ssssssssssssssssssssss")
             const data = await result.json()
             console.log({ data })
             res.send(data)
+            res.redirect("dashboard");
             //gestiono la 
             /*
             res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
@@ -150,7 +159,7 @@ const editFilmProxy = async (req, res) => {
 
     } catch (error) {
         console.log(error)
-        res.redirect("admin/adminError"); //Redirige al adminError
+        res.redirect("dashboard");
     }
 
 };
