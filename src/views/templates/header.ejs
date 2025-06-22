@@ -37,7 +37,14 @@
         <li><a href="#" class="nav-link">Inicio</a></li>
         <li><a href="#" class="nav-link">Buscador</a></li>
         <li><a href="#" class="nav-link">Mis películas</a></li>
-        <li><a href="#" class="nav-link text-danger">Cerrar sesión</a></li>
+        <% if (user) { %>
+          <!-- Solo mostramos si hay sesión -->
+          <li>
+            <a href="/logout" class="nav-link text-danger">
+              Cerrar sesión
+            </a>
+          </li>
+          <% } %>
       </ul>
     </div>
   </div>

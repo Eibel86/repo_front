@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const { filmsRoutes, authRoutes, dashboardRoutes } = require("./routers/index.routes");
 
+
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -19,6 +20,8 @@ app.use((req, res, next) => {
     res.locals.cookies = req.cookies;
     next();
 });
+
+
 
 app.use(setUser);
 app.use(express.urlencoded({ extended: true })); // Middleware para parsear body

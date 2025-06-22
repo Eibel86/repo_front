@@ -9,8 +9,6 @@ const setUser = (req, res, next) => {
         req.user = null;
         res.locals.user = null;
     }
-
     next();
 };
-
 module.exports = setUser;
