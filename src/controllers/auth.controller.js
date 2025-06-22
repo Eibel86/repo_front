@@ -40,11 +40,13 @@ const backRegistry = async (req, res) => {
 
         // Asumimos que result tiene el token
         if (result.token) {
-            res.cookie("token", result.token, {
-                httpOnly: true,
-                secure: false,
-                maxAge: 1000 * 60 * 60 * 24,
-            });
+            if (result.token) {
+                res.cookie("token", result.token, {
+                    httpOnly: true,
+                    secure: false,
+                    maxAge: 1000 * 60 * 60 * 24,
+                });
+            }
             res.cookie("userId", result.user.id, {
                 httpOnly: false,
                 secure: false,

@@ -14,11 +14,13 @@ const adminDashboard = async (req, res) => {
 
     try {
         const result = await apiFetch(endpoint, "GET", { "Authorization": `Bearer ${req.cookies.token}` })
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
         res.render("admin/adminDashboard", {
             films: result.data,
             backendUrl: process.env.URL_BASE_BACK,
@@ -45,11 +47,13 @@ const deleteFilm = async (req, res) => {
             endpoint,
             "DELETE",
             { "Authorization": `Bearer ${req.cookies.token}` })
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
         res.redirect("dashboard");
     } catch (error) {
         console.log(error)
@@ -82,11 +86,15 @@ const createFilm = async (req, res) => {
             body: req,
             duplex: 'half'
         });
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
+
         if (result.ok) {
             res.redirect("dashboard"); //Redirigir al adminDashboard
 
@@ -117,13 +125,13 @@ const editFilm = async (req, res) => {
             endpoint,
             "GET",
             { "Authorization": `Bearer ${req.cookies.token}` })
-
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
-
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
         res.render("admin/adminEditFilm", {
             film: result.data,
             errores: []

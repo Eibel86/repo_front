@@ -10,18 +10,17 @@ const getFilmsByTitle = async (req, res) => {
         const { title } = req.body
         const userId = req.cookies.userId;
         const result = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/film/search/${title}`, "GET", { "Authorization": `Bearer ${req.cookies.token}` });
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
+
         const favsResult = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/getFavourites/${userId}`, "GET", { "Authorization": `Bearer ${req.cookies.token}` });
         const favouritesFilmId = favsResult.favourites.map(element => element.film_id);
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+
         return res.render("user/films", {
             films: result.data,
             backendUrl: process.env.URL_BASE_BACK,
@@ -57,11 +56,13 @@ const addFavourite = async (req, res) => {
                 userId,
                 filmId
             });
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
         return res.render("user/films", {
             films: {},
             backendUrl: process.env.URL_BASE_BACK,
@@ -92,11 +93,13 @@ const deleteFavourite = async (req, res) => {
                 userId,
                 filmId
             });
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
         return res.render("user/films", {
             films: {},
             backendUrl: process.env.URL_BASE_BACK,
@@ -120,11 +123,13 @@ const favouriteFilms = async (req, res) => {
         const userId = req.cookies.userId;
         const result = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/getFavourites/${userId}`, "GET", { "Authorization": `Bearer ${req.cookies.token}` });
         const favouritesFilmId = result.favourites.map(element => element.film_id);
-        res.cookie("token", result.token, {
-            httpOnly: true,
-            secure: false,
-            maxAge: 1000 * 60 * 60 * 24,
-        });
+        if (result.token) {
+            res.cookie("token", result.token, {
+                httpOnly: true,
+                secure: false,
+                maxAge: 1000 * 60 * 60 * 24,
+            });
+        }
         return res.render("user/favourites", {
             films: result.favourites,
             backendUrl: process.env.URL_BASE_BACK,
