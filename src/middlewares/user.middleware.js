@@ -1,3 +1,9 @@
+
+/**
+ * Middleware que extrae el ID y rol del usuario de las cookies,
+ * asignándolos a `req.user` y `res.locals.user` para uso en rutas y vistas.
+ * Si no hay datos, asigna `null`.
+ */
 const setUser = (req, res, next) => {
     const userId = req.cookies.userId;
     const userRole = req.cookies.userRole;
@@ -13,4 +19,9 @@ const setUser = (req, res, next) => {
     next();
 };
 
+
+/**
+ * Exportar el middleware
+ * Middleware que añade información del usuario (ID y rol) extraída de cookies
+ */
 module.exports = setUser;

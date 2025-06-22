@@ -16,7 +16,8 @@
     -"cors"
     -"dotenv"
     -"express"
-
+    -"cookie-parser"
+    -"node-fetch"
 ```shell
   npm i 
 ```
