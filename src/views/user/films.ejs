@@ -1,17 +1,33 @@
-<!DOCTYPE html>
-<html lang="es">
+<%- include('../templates/header', { title: 'Películas | MovieApp' }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <title> First front</title>
-</head>
+    <div class="forms-page">
+        <div class="form-card">
+            <!-- Título de página -->
+            <h2 class="text-center mb-4">Películas</h2>
 
-<%- include("../partials/header") -%>
+            <!-- Buscador (formato “pill”) -->
+            <form action="/films/searchFilmsByTitle" method="POST" class="d-flex mb-4" novalidate>
+                <input type="text" name="title" class="form-control form-control-pill me-2"
+                    placeholder="Buscar por título" required />
+                <button type="submit" class="btn btn-primary btn-pill">
+                    Buscar
+                </button>
+            </form>
 
-    <h1>Películas</h1>
+            <!-- Grilla responsive de tarjetas -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+                <% if (films && films.length> 0) { %>
+                    <% films.forEach(film=> { %>
+                        <div class="col">
+                            <%- include('../partials/card', { film, backendUrl, favouritesFilmId, showFavouriteButton,
+                                showEditButton, showDeleteButton }) %>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p class="text-center">No se encontraron películas.</p>
+                                <% } %>
+            </div>
+        </div>
+    </div>
 
-    <form action="/films/searchFilmsByTitle" method="POST">
-        <input type="text" name="title">
-        <input type="submit" value="Buscar">
-    </form>
-    <%- include("../partials/cardContainer")%>
+    <%- include('../templates/footer') %>

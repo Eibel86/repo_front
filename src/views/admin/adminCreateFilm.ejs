@@ -1,61 +1,58 @@
-<%- include('../templates/header') %>
+<%- include('../templates/header', { title: 'Crear película | MovieApp' }) %>
 
-    <header>
-        <h1>Crear una película</h1>
-    </header>
-
-    <main>
-        <!-- FORMULARIO: CREATE FILM ----------------------------------------------->
-        <form action="createfilm" method="POST" enctype="multipart/form-data" novalidate> <!--Para enviar imgs Multer-->
-
-            <%# INPUT: full_title %>
-                <div>
-                    <label for="full_title">Título</label>
-                    <input type="text" name="full_title" id="full_title" required />
+    <div class="forms-page d-flex justify-content-center align-items-center">
+        <div class="form-card text-center">
+            <h2 class="mb-4">Crear una película</h2>
+            <form action="createfilm" method="POST" enctype="multipart/form-data" novalidate>
+                <!-- Título -->
+                <div class="mb-3 text-start">
+                    <label for="full_title" class="form-label">Título</label>
+                    <input type="text" name="full_title" id="full_title" class="form-control form-control-pill"
+                        placeholder="Introduce el título" required>
                 </div>
 
-                <%# INPUT: director_name %>
-                    <div>
-                        <label for="director_name">Director</label>
-                        <input type="text" name="director_name" id="director_name" required />
-                        <!-- value = ejs obtener valor-->
-                    </div>
+                <!-- Director -->
+                <div class="mb-3 text-start">
+                    <label for="director_name">Director</label>
+                    <input type="text" name="director_name" id="director_name" class="form-control form-control-pill"
+                        placeholder="Introduce el nombre del director" required>
+                </div>
 
-                    <%# INPUT: genre_name %>
-                        <div>
-                            <label for="genre_name">Género</label>
-                            <input type="text" name="genre_name" id="genre_name" required />
-                        </div>
+                <!-- Imagen -->
+                <div class="mb-3 text-start">
+                    <label for="poster" class="form-label">Cartel</label>
+                    <input type="file" name="poster" id="poster" class="form-control form-control-pill" required>
+                </div>
 
-                        <%# INPUT: image (input type file)%>
-                            <div>
-                                <label for="image">Imagen de la película</label>
-                                <input type="file" name="image" id="image" accept="image/*" required />
-                            </div>
+                <!-- Release_data -->
+                <div class="mb-3 text-start">
+                    <label for="release_date">Fecha de estreno</label>
+                    <input type="date" name="release_date" id="release_date" class="form-control form-control-pill"
+                        placeholder="Introduce la fecha de estreno" required>
+                </div>
 
-                            <%# INPUT: release_date %>
-                                <div>
-                                    <label for="release_date">Fecha de estreno</label>
-                                    <input type="date" name="release_date" id="release_date" required />
-                                </div>
+                <!-- Duration -->
+                <div class="mb-3 text-start">
+                    <label for="duration">Duración (minutos)</label>
+                    <input type="number" name="duration" id="duration" class="form-control form-control-pill"
+                        placeholder="Duración" required>
+                </div>
 
-                                <%# INPUT: duration %>
-                                    <div>
-                                        <label for="duration">Duración (minutos)</label>
-                                        <input type="number" name="duration" id="duration" required />
-                                    </div>
+                <!-- Sinopsis -->
+                <div class="mb-3 text-start">
+                    <label for="synopsis" class="form-label">Sinopsis</label>
+                    <textarea name="synopsis" id="synopsis" rows="5" class="form-control form-control-pill"
+                        placeholder="Escribe la sinopsis" required></textarea>
+                </div>
 
-                                    <%# INPUT: synopsis %>
-                                        <div>
-                                            <label for="synopsis">Sinopsis</label>
-                                            <textarea name="synopsis" id="synopsis" rows="5" required></textarea>
-                                        </div>
-
-                                        <%# INPUT: botón de enviar %>
-                                            <div>
-                                                <button type="submit">Crear película</button>
-                                            </div>
-        </form>
-    </main>
+                <!-- Botón -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-pill">
+                        Crear película
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <%- include('../templates/footer') %>
