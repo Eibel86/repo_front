@@ -58,7 +58,7 @@ const redirectIfAuthenticated = (req, res, next) => {
     const { userRole } = req.cookies;
 
     if (userRole === "user") return res.redirect("/films");
-    if (userRole === "admin") return res.redirect("/dashboard");
+    if (userRole === "admin") return res.redirect("/admin/dashboard");
 
     next();
 };

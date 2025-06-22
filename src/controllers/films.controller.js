@@ -13,10 +13,24 @@ const getFilmsByTitle = async (req, res) => {
         const favsResult = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/getFavourites/${userId}`);
         const favouritesFilmId = favsResult.favourites.map(element => element.film_id);
         console.log(favouritesFilmId)
-        return res.render("user/films", { films: result.data, backendUrl: process.env.URL_BASE_BACK, favouritesFilmId, showFavouriteButton: true })
+        return res.render("user/films", {
+            films: result.data,
+            backendUrl: process.env.URL_BASE_BACK,
+            favouritesFilmId,
+            showFavouriteButton: true,
+            showDeleteButton: false,
+            showEditButton: false
+        })
     } catch (error) {
         console.log(error)
-        return res.render("user/films", { films: {} })
+        return res.render("user/films", {
+            films: {},
+            backendUrl: process.env.URL_BASE_BACK,
+            favouritesFilmId,
+            showFavouriteButton: true,
+            showDeleteButton: false,
+            showEditButton: false
+        })
     }
 }
 
@@ -74,10 +88,24 @@ const favouriteFilms = async (req, res) => {
         const result = await apiFetch(process.env.URL_BASE_BACK + `/api/v1/getFavourites/${userId}`);
         const favouritesFilmId = result.favourites.map(element => element.film_id);
         console.log(result)
-        return res.render("user/favourites", { films: result.favourites, backendUrl: process.env.URL_BASE_BACK, favouritesFilmId, showFavouriteButton: true })
+        return res.render("user/favourites", {
+            films: result.favourites,
+            backendUrl: process.env.URL_BASE_BACK,
+            favouritesFilmId,
+            showFavouriteButton: true,
+            showDeleteButton: false,
+            showEditButton: false
+        })
     } catch (error) {
         console.log(error)
-        return res.render("user/favourites", { films: {} })
+        return res.render("user/favourites", {
+            films: {},
+            backendUrl: process.env.URL_BASE_BACK,
+            favouritesFilmId,
+            showFavouriteButton: true,
+            showDeleteButton: false,
+            showEditButton: false
+        })
     }
 }
 
