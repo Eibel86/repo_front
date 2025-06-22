@@ -27,13 +27,17 @@ app.use(express.json());
 
 // CONFIGURACIÓN DE VISTAS (EJS)
 app.set("view engine", "ejs");
-console.log(__dirname+'/views') //Comprobación de ruta
+console.log(__dirname + '/views') //Comprobación de ruta
 app.set("views", `${__dirname}/views`);
 
 
 // CARPETA ESTÁTICA (archivos estáticos desde la carpeta public)
 app.use(express.static(`${__dirname}/public`));
 
+app.use((req, res, next) => {
+    console.log(`➡️ ${req.method} ${req.originalUrl}`);
+    next();
+});
 
 // RUTAS 
 app.use("/", authRoutes)

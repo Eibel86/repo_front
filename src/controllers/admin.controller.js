@@ -1,3 +1,6 @@
+
+const cookieParser = require("cookie-parser");
+const { apiFetch } = require("../utils/apiFetch");
 // ADMIN CONTROLLERS:
 // CONTROLADOR: admin/films (dashboard)  ---------------------------------------------- // 
 /* 
@@ -7,7 +10,7 @@
 const adminDashboard = async (req, res) => {
 
     console.log('entraen admin dashboard')
-    const endpoint = process.env.URL_BASE_BACK + "api/v1/allfilms"
+    const endpoint = process.env.URL_BASE_BACK + "/api/v1/allfilms"
 
     //TODO: recoger token de kookies
     try {
@@ -15,16 +18,16 @@ const adminDashboard = async (req, res) => {
         const result = await apiFetch(endpoint, "GET", {/*header */ })
         // console.log(result)
         res.render("admin/adminDashboard", {
-            ...result
+            films: result.data,
+            backendUrl: process.env.URL_BASE_BACK,
+            showFavouriteButton: false,
+            showDeleteButton: true,
+            showEditButton: true
         })
 
     } catch (error) {
+        console.log(error)
         res.send('error')
-    }
-
-    //ruta que elimina
-    const deleteFilm = async (req, res) => {
-
     }
 }
 //ruta qeu muestra mensaje de confirmación
@@ -32,7 +35,21 @@ const adminDashboard = async (req, res) => {
 //vista editar pelicula GET (formulario) recoger los datos de la pelicula por su id
 
 //ruta post que envia los datos del formujlario a la api updateFilm
+//ruta que elimina
+const deleteFilm = async (req, res) => {
+    try {
+        const endpoint = process.env.URL_BASE_BACK + `/api/v1/deleteFilm/${req.body.filmId}`
+        const result = await apiFetch(
+            endpoint,
+            "DELETE",
+            { "Authorization": `Bearer ${req.cookies.token}` })
 
+        res.send("delete film")
+    } catch (error) {
+        console.log(error)
+        res.send("error")
+    }
+}
 
 
 
@@ -81,14 +98,69 @@ const createFilm = async (req, res) => {
 
 }
 
-// GET ALL FILMS
+const editFilm = async (req, res) => {
+    try {
+        const filmId = req.body.filmId;
+        const endpoint = process.env.URL_BASE_BACK + `/api/v1/film/searching/${filmId}`;
+        const result = await apiFetch(
+            endpoint,
+            "GET",
+            { "Authorization": `Bearer ${req.cookies.token}` })
+        console.log(result);
+        res.render("admin/adminEditFilm", {
+            film: result.data
+        });
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
 
 
+}
 
+
+const editFilmProxy = async (req, res) => {
+    const endpoint = process.env.URL_BASE_BACK + "/api/v1/updatefilm"
+
+    //todo: obtener de la cookie el token y añadirselo al header
+    //despues actualizar el token de la cookie con la respuesta
+    try {
+        const result = await fetch(endpoint, {
+            method: "POST",
+            headers: req.headers,
+            body: req,
+            duplex: 'half'
+        });
+
+        if (result.ok) {
+            console.log({ result })
+            res.redirect("dashboard"); //Redirigir al adminDashboard
+
+        } else {
+            console.log("ssssssssssssssssssssss")
+            const data = await result.json()
+            console.log({ data })
+            res.send(data)
+            //gestiono la 
+            /*
+            res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
+            */
+        }
+
+
+    } catch (error) {
+        console.log(error)
+        res.redirect("admin/adminError"); //Redirige al adminError
+    }
+
+};
 
 // EXPORTS
 module.exports = {
     adminDashboard,
     renderCreateFilm,
-    createFilm
+    createFilm,
+    deleteFilm,
+    editFilm,
+    editFilmProxy
 }

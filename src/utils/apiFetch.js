@@ -2,7 +2,6 @@
 
 const apiFetch = async (url, method = "GET", header = {}, body = {}) => {
     const options = {};
-
     if (method == "POST" || method == "PUT") {
         options.headers = { 'Content-Type': 'application/json', ...header }
         options.method = method;
@@ -14,6 +13,8 @@ const apiFetch = async (url, method = "GET", header = {}, body = {}) => {
     }
     try {
         const result = await fetch(url, options);
+        console.log(url)
+        console.log(options)
         if (result.ok) {
             return await result.json();
         } else {
