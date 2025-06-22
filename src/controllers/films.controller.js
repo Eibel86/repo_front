@@ -62,7 +62,14 @@ const addFavourite = async (req, res) => {
             secure: false,
             maxAge: 1000 * 60 * 60 * 24,
         });
-        return res.send("favorito agregado");
+        return res.render("user/films", {
+            films: {},
+            backendUrl: process.env.URL_BASE_BACK,
+            favouritesFilmId: [],
+            showFavouriteButton: true,
+            showDeleteButton: false,
+            showEditButton: false
+        })
     } catch (error) {
 
         console.log(error)
@@ -90,7 +97,14 @@ const deleteFavourite = async (req, res) => {
             secure: false,
             maxAge: 1000 * 60 * 60 * 24,
         });
-        return res.send("favorito eliminado");
+        return res.render("user/films", {
+            films: {},
+            backendUrl: process.env.URL_BASE_BACK,
+            favouritesFilmId: [],
+            showFavouriteButton: true,
+            showDeleteButton: false,
+            showEditButton: false
+        })
     } catch (error) {
 
         console.log(error)

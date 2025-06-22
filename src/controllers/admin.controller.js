@@ -65,7 +65,7 @@ const deleteFilm = async (req, res) => {
 // El formulario manda los datos por POST a la ruta admin/createfilm con el controlador createFilm
 
 const renderCreateFilm = async (req, res) => {
-    res.render("admin/adminCreateFilm");
+    res.render("admin/adminCreateFilm", { errores: [] });
 };
 
 
@@ -82,13 +82,19 @@ const createFilm = async (req, res) => {
             body: req,
             duplex: 'half'
         });
-
+        res.cookie("token", result.token, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 1000 * 60 * 60 * 24,
+        });
         if (result.ok) {
             res.redirect("dashboard"); //Redirigir al adminDashboard
 
         } else {
-            console.log(await result.json())
-            res.render("admin/adminCreateFilm");
+            const data = await result.json();
+            const errores = Object.values(data.errores).map(err => err.msg);
+            console.log(errores)
+            res.render("admin/adminCreateFilm", { errores });
             //gestiono la 
             /*
             res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
@@ -111,13 +117,16 @@ const editFilm = async (req, res) => {
             endpoint,
             "GET",
             { "Authorization": `Bearer ${req.cookies.token}` })
+
         res.cookie("token", result.token, {
             httpOnly: true,
             secure: false,
             maxAge: 1000 * 60 * 60 * 24,
         });
+
         res.render("admin/adminEditFilm", {
-            film: result.data
+            film: result.data,
+            errores: []
         });
     } catch (error) {
         console.log(error)
@@ -148,12 +157,15 @@ const editFilmProxy = async (req, res) => {
         } else {
             const data = await result.json()
             console.log({ data })
-            res.send(data)
-            res.redirect("dashboard");
-            //gestiono la 
-            /*
-            res.render(formulario de crear la película) mandandole el resultado con losw mensajes de error
-            */
+            const result = await apiFetch(
+                endpoint,
+                "GET",
+                { "Authorization": `Bearer ${req.cookies.token}` })
+            const errores = Object.values(data.errores).map(err => err.msg);
+            res.render("admin/adminEditFilm", {
+                film: result.data,
+                errores
+            });
         }
 
 

@@ -18,6 +18,13 @@
                         placeholder="Introduce el nombre del director" required>
                 </div>
 
+                <!-- Género -->
+                <div class="mb-3 text-start">
+                    <label for="genre_name" class="form-label">Género</label>
+                    <input type="text" name="genre_name" id="genre_name" required class="form-control form-control-pill"
+                        placeholder="Introduce el género" />
+                </div>
+
                 <!-- Imagen -->
                 <div class="mb-3 text-start">
                     <label for="poster" class="form-label">Cartel</label>
@@ -52,6 +59,18 @@
                     </button>
                 </div>
             </form>
+            <!-- Errores -->
+            <% if (errores && errores.length> 0) { %>
+                <div class="errores">
+                    <ul>
+                        <% errores.forEach(error=> { %>
+                            <li>
+                                <%= error %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                </div>
+                <% } %>
         </div>
     </div>
 
