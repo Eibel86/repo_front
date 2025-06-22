@@ -4,7 +4,6 @@
 // Tener la base preparada para proteger cualquier ruta en el futuro.
 const authenticate = (req, res, next) => {
     const { userId, userRole } = req.cookies;
-
     if (!userId || !userRole) {
         return res.redirect("/login");
     }
@@ -16,7 +15,7 @@ const authenticate = (req, res, next) => {
 // MIDDLEWARE: Redireccionar por role
 const redirectByRole = (req, res) => {
     if (req.user.role === "user") return res.redirect("/films");
-    if (req.user.role === "admin") return res.redirect("/dashboard");
+    if (req.user.role === "admin") return res.redirect("/admin/dashboard");
     return res.redirect("/login");
 }
 

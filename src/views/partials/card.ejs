@@ -3,18 +3,31 @@
     <h2>
         <%= film.full_title %>
     </h2>
-
-    <% if (showFavouriteButton) { %>
-        <% if (!favouritesFilmId.includes(film.film_id)) { %>
-            <form action="/films/addFavourite" method="POST">
-                <input type="hidden" name="filmId" value="<%= film.film_id %>">
-                <button type="submit">Añadir a Favoritos</button>
-            </form>
-            <% } else { %>
-                <form action="/films/deleteFavourite" method="POST">
+    <% if (showDeleteButton) { %>
+        <form action="/admin/deleteFilm" method="POST">
+            <input type="hidden" name="filmId" value="<%= film.film_id %>">
+            <button type="submit">Eliminar</button>
+        </form>
+        <% } %>
+            <% if (showEditButton) { %>
+                <form action="/admin/editFilm" method="POST">
                     <input type="hidden" name="filmId" value="<%= film.film_id %>">
-                    <button type="submit">Eliminar de Favoritos</button>
+                    <button type="submit">Editar</button>
                 </form>
                 <% } %>
-                    <% } %>
+                    <!-- Favourite button -->
+                    <% if (showFavouriteButton) { %>
+                        <% if (!favouritesFilmId.includes(film.film_id)) { %>
+                            <form action="/films/addFavourite" method="POST">
+                                <input type="hidden" name="filmId" value="<%= film.film_id %>">
+                                <button type="submit">Añadir a Favoritos</button>
+                            </form>
+                            <% } else { %>
+                                <form action="/films/deleteFavourite" method="POST">
+                                    <input type="hidden" name="filmId" value="<%= film.film_id %>">
+                                    <button type="submit">Eliminar de Favoritos</button>
+                                </form>
+                                <% } %>
+                                    <% } %>
+
 </div>
