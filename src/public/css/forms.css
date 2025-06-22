@@ -1,0 +1,76 @@
+/* ========================================
+   Card principal del formulario
+   ======================================== */
+.form-card {
+  width: 90%;
+  /* ocupa el 90% en móviles */
+  max-width: 350px;
+  /* hasta 350px en pantallas más anchas */
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  position: relative;
+  margin: auto;
+  /* centra siempre */
+  /* si tu contenido puede desbordar en altura */
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ========================================
+   Botones tipo “pill”
+   ======================================== */
+.btn-pill {
+  border-radius: 50px !important;
+}
+
+/* ========================================
+   Inputs redondeados
+   ======================================== */
+.form-control-pill {
+  border-radius: 50px;
+}
+
+/* ========================================
+   Navbar superior de forms (Sign up / Log in)
+   ======================================== */
+/* Nav por defecto en móvil, centrado encima de la card */
+.forms-nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* En pantallas medianas hacia arriba, lo pones en la esquina */
+@media (min-width: 768px) {
+  .forms-nav {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    margin-bottom: 0;
+  }
+}
+
+.forms-nav .btn {
+  opacity: 0.6;
+}
+
+.forms-nav .btn.active {
+  opacity: 1;
+}
+
+/* ========================================
+   Ajustes de utilidad
+   ======================================== */
+/* Fuerza altura completa del viewport si la necesitas */
+.vh-100 {
+  height: 100vh !important;
+}
+
+/* Si usas filas dentro de la card, control de overflow */
+.form-card .row {
+  max-height: 60vh;
+  overflow-y: auto;
+}

@@ -13,7 +13,10 @@ const { apiFetch } = require("../utils/apiFetch");
  */
 const registry = async (req, res) => {
 
-    res.status(200).render("auth/registry", { errors: {} }); //Renderiza la vista 'registry' (formulario de registro)
+    res.status(200).render("auth/registry", {
+        errors: {},
+        active: "registry"
+    }); //Renderiza la vista 'registry' (formulario de registro)
 };
 // CONTROLADOR: Registro en backend
 /**
@@ -85,7 +88,10 @@ const backRegistry = async (req, res) => {
 const login = async (req, res) => {
     //TODO: mirar en la cookie si hay token, y si lo hay redireccionar dependiendo el rol y si no renderizar el login
 
-    res.status(200).render("auth/login", { errors: {} });
+    res.status(200).render("auth/login", {
+        errors: {},
+        active: "login"
+    });
 
 
 };

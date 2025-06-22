@@ -1,71 +1,69 @@
-<%- include('../templates/header') %>
+<%- include('../templates/header', { title: 'Editar película | MovieApp' }) %>
 
-    <header>
-        <h1>Editar pelicula</h1>
-    </header>
+    <div class="forms-page d-flex justify-content-center align-items-center">
+        <div class="form-card text-center">
+            <h2 class="mb-4">Editar película</h2>
+            <form action="editFilmProxy" method="POST" enctype="multipart/form-data" novalidate>
+                <!-- ID Oculto -->
+                <input type="hidden" name="film_id" value="<%= film.film_id %>">
 
-    <main>
-        <!-- FORMULARIO: CREATE FILM ----------------------------------------------->
-        <form action="editFilmProxy" method="POST" enctype="multipart/form-data" novalidate>
-            <!--Para enviar imgs Multer-->
-            <div>
-                <input type="hidden" name="film_id" id="film_id" value="<%= film.film_id %>" required />
-            </div>
-
-            <%# INPUT: full_title %>
-                <div>
-                    <label for="full_title">Título</label>
-                    <input type="text" name="full_title" id="full_title" value="<%= film.full_title %>" required />
+                <!-- Título -->
+                <div class="mb-3 text-start">
+                    <label for="full_title" class="form-label">Título</label>
+                    <input type="text" name="full_title" id="full_title" class="form-control form-control-pill"
+                        value="<%= film.full_title %>" required>
                 </div>
 
-                <%# INPUT: director_name %>
-                    <div>
-                        <label for="director_name">Director</label>
-                        <input type="text" name="director_name" id="director_name" value="<%= film.director_name %>"
-                            required />
-                        <!-- value = ejs obtener valor-->
-                    </div>
+                <!-- Director_name -->
+                <div class="mb-3 text-start">
+                    <label for="director_name" class="form-label">Director</label>
+                    <input type="text" name="director_name" id="director_name" class="form-control form-control-pill"
+                        value="<%= film.director_name %>" required>
+                </div>
 
-                    <%# INPUT: genre_name %>
-                        <div>
-                            <label for="genre_name">Género</label>
-                            <input type="text" name="genre_name" id="genre_name" value="<%= film.genre_name %>"
-                                required />
-                        </div>
+                <!-- Genre_name -->
+                <div class="mb-3 text-start">
+                    <label for="genre_name" class="form-label">Género</label>
+                    <input type="text" name="genre_name" id="genre_name" class="form-control form-control-pill"
+                        value="<%= film.genre_name %>" required>
+                </div>
 
-                        <%# INPUT: image (input type file)%>
-                            <div>
-                                <label for="image">Imagen de la película</label>
-                                <input type="file" name="image" id="image" accept="image/*" />
-                            </div>
+                <!-- Cartel -->
+                <div class="mb-3 text-start">
+                    <label for="poster" class="form-label">Cartel</label>
+                    <input type="file" name="poster" id="poster" class="form-control form-control-pill">
+                </div>
 
-                            <%# INPUT: release_date %>
-                                <div>
-                                    <label for="release_date">Fecha de estreno</label>
-                                    <% const formattedDate=new Date(film.release_date).toISOString().split('T')[0]; %>
-                                        <input type="date" name="release_date" id="release_date"
-                                            value="<%= formattedDate %>" required />
-                                </div>
+                <!-- Realease_date -->
+                <div class="mb-3 text-start">
+                    <label for="release_date" class="form-label">Fecha de estreno</label>
+                    <% const formattedDate=new Date(film.release_date).toISOString().split('T')[0]; %>
+                        <input type="date" name="release_date" id="release_date" class="form-control form-control-pill"
+                            value="<%= formattedDate %>" required>
+                </div>
 
-                                <%# INPUT: duration %>
-                                    <div>
-                                        <label for="duration">Duración (minutos)</label>
-                                        <input type="number" name="duration" id="duration" value="<%= film.duration %>"
-                                            required />
-                                    </div>
+                <!-- Duration -->
+                <div class="mb-3 text-start">
+                    <label for="duration">Duración (minutos)</label>
+                    <input type="number" name="duration" id="duration" class="form-control form-control-pill"
+                        value="<%= film.duration %>" required>
+                </div>
 
-                                    <%# INPUT: synopsis %>
-                                        <div>
-                                            <label for="synopsis">Sinopsis</label>
-                                            <textarea name="synopsis" id="synopsis" rows="5"
-                                                required> <%= film.synopsis %></textarea>
-                                        </div>
+                <!-- Sinopsis -->
+                <div class="mb-3 text-start">
+                    <label for="synopsis" class="form-label">Sinopsis</label>
+                    <textarea name="synopsis" id="synopsis" rows="5" class="form-control form-control-pill"
+                        required><%= film.synopsis %></textarea>
+                </div>
 
-                                        <%# INPUT: botón de enviar %>
-                                            <div>
-                                                <button type="submit">Guardar cambios</button>
-                                            </div>
-        </form>
-    </main>
+                <!-- Botón -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-pill">
+                        Guardar cambios
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <%- include('../templates/footer') %>
