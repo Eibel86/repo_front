@@ -1,33 +1,49 @@
 <div class="card">
-    <img src="<%= backendUrl %>/<%= film.image_url %>" alt="Imagen de <%= film.full_title %>">
-    <h2>
-        <%= film.full_title %>
-    </h2>
-    <% if (showDeleteButton) { %>
-        <form action="/admin/deleteFilm" method="POST">
-            <input type="hidden" name="filmId" value="<%= film.film_id %>">
-            <button type="submit">Eliminar</button>
-        </form>
-        <% } %>
-            <% if (showEditButton) { %>
-                <form action="/admin/editFilm" method="POST">
-                    <input type="hidden" name="filmId" value="<%= film.film_id %>">
-                    <button type="submit">Editar</button>
-                </form>
-                <% } %>
-                    <!-- Favourite button -->
-                    <% if (showFavouriteButton) { %>
-                        <% if (!favouritesFilmId.includes(film.film_id)) { %>
-                            <form action="/films/addFavourite" method="POST">
-                                <input type="hidden" name="filmId" value="<%= film.film_id %>">
-                                <button type="submit">Añadir a Favoritos</button>
-                            </form>
-                            <% } else { %>
-                                <form action="/films/deleteFavourite" method="POST">
-                                    <input type="hidden" name="filmId" value="<%= film.film_id %>">
-                                    <button type="submit">Eliminar de Favoritos</button>
-                                </form>
-                                <% } %>
-                                    <% } %>
+<div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
+  <div class="card shadow-sm rounded-4 w-100 border-0">
+    <img src="<%= backendUrl %>/<%= film.image_url %>"
+         class="img-rounded"
+         alt="Imagen de <%= film.full_title %>"
+         style="width: 100%; height: auto;">
 
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title text-center fw-bold"><%= film.full_title %></h5>
+
+      <% if (showDeleteButton) { %>
+        <form action="/admin/deleteFilm" method="POST" class="mb-2">
+          <input type="hidden" name="filmId" value="<%= film.film_id %>">
+          <button type="submit" class="btn btn-outline-danger w-100">
+            <i class="bi bi-trash-fill me-1"></i> Eliminar
+          </button>
+        </form>
+      <% } %>
+
+      <% if (showEditButton) { %>
+        <form action="/admin/editFilm" method="POST" class="mb-2">
+          <input type="hidden" name="filmId" value="<%= film.film_id %>">
+          <button type="submit" class="btn btn-warning w-100">
+            <i class="bi bi-pencil-square me-1"></i> Editar
+          </button>
+        </form>
+      <% } %>
+
+      <% if (showFavouriteButton) { %>
+        <% if (!favouritesFilmId.includes(film.film_id)) { %>
+          <form action="/films/addFavourite" method="POST" class="mb-2 mt-auto">
+            <input type="hidden" name="filmId" value="<%= film.film_id %>">
+            <button type="submit" class="btn btn-outline-primary w-100">
+              <i class="bi bi-heart me-1"></i> Añadir a Favoritos
+            </button>
+          </form>
+        <% } else { %>
+          <form action="/films/deleteFavourite" method="POST" class="mb-2 mt-auto">
+            <input type="hidden" name="filmId" value="<%= film.film_id %>">
+            <button type="submit" class="btn btn-outline-secondary w-100">
+              <i class="bi bi-trash-fill me-1"></i> Eliminar de Favoritos
+            </button>
+          </form>
+        <% } %>
+      <% } %>
+    </div>
+  </div>
 </div>

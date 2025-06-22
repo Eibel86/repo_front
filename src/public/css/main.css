@@ -1,0 +1,163 @@
+/* ========================================
+   Reset y body full height
+   ======================================== */
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #000; /* fondo negro */
+  height: 100vh; /* evita overflow vertical */
+}
+
+/* ========================================
+   Side menu y overlay
+   ======================================== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 75%;
+  height: 100%;
+  background-color: #d3d3d3;
+  z-index: 1050;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.side-menu.open {
+  transform: translateX(0);
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+  display: none;
+}
+
+.menu-overlay.show {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .side-menu,
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .desktop-nav {
+    display: flex !important;
+  }
+}
+
+/* ========================================
+   Header (barra superior con botones)
+   ======================================== */
+.forms-nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: transparent;
+  z-index: 10;
+}
+
+.forms-nav .btn {
+  border-radius: 50px !important;
+  opacity: 0.6;
+}
+
+.forms-nav .btn.active {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .forms-nav {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    margin-bottom: 0;
+  }
+}
+
+/* ========================================
+   Contenedor principal (contenido central)
+   ======================================== */
+.containerLogin {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* ========================================
+   Card principal del formulario
+   ======================================== */
+.form-card {
+  width: 90%;
+  max-width: 600px;
+  background-color: rgba(240, 240, 240, 0.9); /* fondo gris claro con opacidad */
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  position: relative;
+  margin: auto;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.form-card .row {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* ========================================
+   Inputs y botones tipo “pill”
+   ======================================== */
+.form-control-pill {
+  border-radius: 50px;
+}
+
+.btn-pill {
+  border-radius: 50px !important;
+}
+
+/* ========================================
+   Footer fijo abajo
+   ======================================== */
+.loginFooter {
+  background-color: #111;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  font-size: 0.9rem;
+}
+
+.loginFooter button.btn {
+  font-size: 1.2rem;
+  transition: opacity 0.3s;
+}
+
+.loginFooter button.btn:hover {
+  opacity: 0.7;
+}
+
+/* ========================================
+   Utilidades
+   ======================================== */
+.vh-100 {
+  height: 100vh !important;
+}
+
+
+
+
+

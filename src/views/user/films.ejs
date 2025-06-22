@@ -1,17 +1,28 @@
-<!DOCTYPE html>
-<html lang="es">
+<%- include("../templates/header_user") -%>
 
-<head>
-    <meta charset="UTF-8">
-    <title> First front</title>
-</head>
+<header class="bg-primary py-4 mb-4">
+  <div class="container">
+    <h1 class="text-white text-center">Películas</h1>
+  </div>
+</header>
 
-<%- include("../partials/header") -%>
+<main class="container">
 
-    <h1>Películas</h1>
+  <!-- Formulario de búsqueda -->
+  <form action="/films/searchFilmsByTitle" method="POST" class="row g-3 justify-content-center mb-4">
+    <div class="col-md-6">
+      <input type="text" name="title" class="form-control form-control-pill" placeholder="Buscar por título" />
+    </div>
+    <div class="col-auto">
+      <input type="submit" value="Buscar" class="btn btn-primary btn-pill px-4" />
+    </div>
+  </form>
 
-    <form action="/films/searchFilmsByTitle" method="POST">
-        <input type="text" name="title">
-        <input type="submit" value="Buscar">
-    </form>
-    <%- include("../partials/cardContainer")%>
+  <!-- Contenedor de tarjetas de películas -->
+  <section>
+    <%- include("../partials/cardContainer") %>
+  </section>
+
+</main>
+
+<%- include("../templates/footer") -%>

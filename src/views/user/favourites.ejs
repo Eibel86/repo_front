@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
+<body class="bg-dark text-white min-vh-100 d-flex flex-column">
 
-<head>
-    <meta charset="UTF-8">
-    <title> Movie app</title>
-</head>
+  <%- include("../templates/header_user") -%>
 
-<%- include("../partials/header") -%>
+  <header class="bg-primary py-4 mb-4">
+    <div class="container">
+      <h1 class="text-white text-center">Películas favoritas</h1>
+    </div>
+  </header>
 
-    <h1>Películas favoritas</h1>
+  <main class="container mb-5 flex-grow-1">
+    <%- include("../partials/cardContainer") %>
+  </main>
 
+  <%- include("../templates/footer") -%>
 
-    <%- include("../partials/cardContainer")%>
+</body>
