@@ -1,7 +1,7 @@
 // IMPORTS
 const { Router } = require("express");
 const { login, backLogin, registry, backRegistry, logout } = require("../controllers/auth.controller")
-const {authenticate, redirectByRole} = require("../middlewares/auth.middleware.js");
+const { authenticate, redirectByRole, redirectIfAuthenticated } = require("../middlewares/auth.middleware.js");
 
 const router = new Router();
 
@@ -15,7 +15,7 @@ router.post("/registry", backRegistry);
 
 // RUTA: Login front y back
 //http://localhost:4000/login
-router.get("/login", login);
+router.get("/login", redirectIfAuthenticated, login);
 router.post("/login", backLogin);
 
 //RUTA: Logout
