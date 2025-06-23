@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: routers/admin.routes.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: routers/admin.routes.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// IMPORTS:
+
+/**
+ * Importa el enrutador de Express para definir rutas modulares.
+ */
+const { Router } = require("express");
+/**
+ * Importa los controladores relacionados con la gestión administrativa de películas.
+ */
+const { adminDashboard, renderCreateFilm, createFilm, deleteFilm, editFilm, editFilmProxy } = require("../controllers/admin.controller")
+/**
+ * Importa middlewares para autenticación y autorización de administradores.
+ */
+const { authenticate, authorizeAdmin } = require("../middlewares/auth.middleware");
+/**
+ * Crea una nueva instancia del enrutador de Express para definir rutas específicas.
+ */
+const router = new Router();
+
+
+/**
+ * Ruta GET para el dashboard de administrador.
+ * 
+ * Protegida por middlewares de autenticación y autorización de admin.
+ * Llama al controlador `adminDashboard` para renderizar la vista.
+ */
+router.get("/dashboard", [authenticate, authorizeAdmin], adminDashboard);
+// RUTA: Mostrar formulario
+//http://localhost:4000/dashboard/admin/createfilm
+/**
+ * Ruta GET para mostrar el formulario de creación de una película.
+ * 
+ * Llama al controlador `renderCreateFilm` para renderizar la vista.
+ */
+router.get("/createfilm", renderCreateFilm);
+
+// RUTA: Procesar formulario (se añade después Multer como middleware)
+//http://localhost:4000/dashboard/admin/createfilm
+/**
+ * Ruta POST para procesar el formulario de creación de una película.
+ * 
+ * Llama al controlador `createFilm` para manejar la creación.
+ * 
+ * Nota: se espera que el middleware de subida de archivos (`upload.single("image")`) 
+ * sea añadido si se manejan imágenes.
+ */
+router.post("/createfilm", createFilm); // Modificado upload.single("image"), 
+
+/**
+ * Ruta POST para eliminar una película.
+ * 
+ * Llama al controlador `deleteFilm` que procesa la eliminación según el ID recibido.
+ */
+router.post("/deleteFilm", deleteFilm);
+
+/**
+ * Ruta POST para obtener datos de una película a editar.
+ * 
+ * Llama al controlador `editFilm` que busca la película por ID y renderiza la vista de edición.
+ */
+router.post("/editFilm", editFilm);
+
+
+/**
+ * Ruta POST para procesar la actualización de una película.
+ * 
+ * Llama al controlador `editFilmProxy` que envía los datos al backend para actualizar.
+ */
+router.post("/editFilmProxy", editFilmProxy)
+
+
+// EXPORTS:
+
+/**
+ * Exporta el enrutador configurado con las rutas del administrador.
+ */
+module.exports = router;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-authController.html">authController</a></li><li><a href="module-authMiddleware.html">authMiddleware</a></li><li><a href="module-cookieParser.html">cookieParser</a></li><li><a href="module-filmsController.html">filmsController</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-utils_apiFetch.html">utils/apiFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addFavourite">addFavourite</a></li><li><a href="global.html#apiFetch">apiFetch</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authenticate">authenticate</a></li><li><a href="global.html#authorizeAdmin">authorizeAdmin</a></li><li><a href="global.html#backLogin">backLogin</a></li><li><a href="global.html#backRegistry">backRegistry</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#deleteFavourite">deleteFavourite</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#favouriteFilms">favouriteFilms</a></li><li><a href="global.html#films">films</a></li><li><a href="global.html#getFilmsByTitle">getFilmsByTitle</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#onlyAdmins">onlyAdmins</a></li><li><a href="global.html#onlyUsers">onlyUsers</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#redirectByRole">redirectByRole</a></li><li><a href="global.html#redirectIfAuthenticated">redirectIfAuthenticated</a></li><li><a href="global.html#registry">registry</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#setUser">setUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Jun 23 2025 10:10:24 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

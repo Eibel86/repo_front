@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: middlewares/auth.middleware.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: middlewares/auth.middleware.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// MIDDLEWARE: Autenticación
+// Validar el token desde la cookie.
+// Redireccionar según el rol (Admin o User).
+// Tener la base preparada para proteger cualquier ruta en el futuro.
+
+/**
+ * Middleware para verificar autenticación basada en cookies.
+ * Redirige a login si no hay usuario, continúa si está autenticado.
+ */
+const authenticate = (req, res, next) => {
+    const { userId, userRole } = req.cookies;
+    if (!userId || !userRole) {
+        return res.redirect("/login");
+    }
+
+    req.user = { id: userId, role: userRole };
+    next();
+};
+
+// MIDDLEWARE: Redireccionar por role
+/**
+ * Redirige al usuario según su rol: usuario normal a /films, administrador a /admin/dashboard.
+ * Si no hay rol válido, redirige a login.
+ */
+const redirectByRole = (req, res) => {
+    if (req.user.role === "user") return res.redirect("/films");
+    if (req.user.role === "admin") return res.redirect("/admin/dashboard");
+    return res.redirect("/login");
+}
+
+// MIDDLEWARE: Verifica si el usuario tiene rol "admin"
+/**
+ * Middleware que permite acceso solo a usuarios con rol "admin".
+ * Si no es admin, elimina cookies y redirige al login.
+ */
+const authorizeAdmin = (req, res, next) => {
+    if (req.user.role !== "admin") {
+        // Eliminar cookies
+        res.clearCookie("token");
+        res.clearCookie("userId");
+        res.clearCookie("userRole");
+
+        // Redirigir al login
+        return res.redirect("/login");
+    }
+    next();
+};
+
+/**
+ * Middleware que permite acceso solo a usuarios con rol "user" o "admin".
+ * Si el rol no es válido, elimina cookies y redirige al login.
+ */
+const onlyUsers = (req, res, next) => {
+    const { userRole } = req.cookies;
+    if (userRole === "user" || userRole === "admin") return next();
+
+    res.clearCookie("token");
+    res.clearCookie("userId");
+    res.clearCookie("userRole");
+    return res.redirect("/login");
+};
+
+/**
+ * Middleware que permite acceso solo a usuarios con rol "admin".
+ * Si no es admin, elimina cookies y redirige al login.
+ */
+const onlyAdmins = (req, res, next) => {
+    const { userRole } = req.cookies;
+    if (userRole === "admin") return next();
+
+    res.clearCookie("token");
+    res.clearCookie("userId");
+    res.clearCookie("userRole");
+    return res.redirect("/login");
+};
+
+
+/**
+ * Middleware que redirige usuarios autenticados según su rol.
+ * Usuarios "user" van a /films y "admin" a /admin/dashboard.
+ * Si no están autenticados, continúa al siguiente middleware.
+ */
+const redirectIfAuthenticated = (req, res, next) => {
+    const { userRole } = req.cookies;
+
+    if (userRole === "user") return res.redirect("/films");
+    if (userRole === "admin") return res.redirect("/admin/dashboard");
+
+    next();
+};
+
+
+
+/**
+ * Módulo que exporta middlewares para autenticación y autorización de usuarios.
+ * 
+ * @module authMiddleware
+ * 
+ * @property {Function} authenticate - Verifica que el usuario esté autenticado.
+ * @property {Function} redirectByRole - Redirige según el rol del usuario.
+ * @property {Function} authorizeAdmin - Permite solo acceso a administradores.
+ * @property {Function} onlyUsers - Permite acceso a usuarios y administradores.
+ * @property {Function} onlyAdmins - Permite acceso solo a administradores.
+ * @property {Function} redirectIfAuthenticated - Redirige usuarios autenticados fuera de login/registro.
+ */
+module.exports = {
+    authenticate,
+    redirectByRole,
+    authorizeAdmin,
+    onlyUsers,
+    onlyAdmins,
+    redirectIfAuthenticated
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-authController.html">authController</a></li><li><a href="module-authMiddleware.html">authMiddleware</a></li><li><a href="module-cookieParser.html">cookieParser</a></li><li><a href="module-filmsController.html">filmsController</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-utils_apiFetch.html">utils/apiFetch</a></li></ul><h3>Global</h3><ul><li><a href="global.html#addFavourite">addFavourite</a></li><li><a href="global.html#apiFetch">apiFetch</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#authenticate">authenticate</a></li><li><a href="global.html#authorizeAdmin">authorizeAdmin</a></li><li><a href="global.html#backLogin">backLogin</a></li><li><a href="global.html#backRegistry">backRegistry</a></li><li><a href="global.html#cookieParser">cookieParser</a></li><li><a href="global.html#deleteFavourite">deleteFavourite</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#favouriteFilms">favouriteFilms</a></li><li><a href="global.html#films">films</a></li><li><a href="global.html#getFilmsByTitle">getFilmsByTitle</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#onlyAdmins">onlyAdmins</a></li><li><a href="global.html#onlyUsers">onlyUsers</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#redirectByRole">redirectByRole</a></li><li><a href="global.html#redirectIfAuthenticated">redirectIfAuthenticated</a></li><li><a href="global.html#registry">registry</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#setUser">setUser</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Mon Jun 23 2025 10:10:24 GMT+0200 (hora de verano de Europa central)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
