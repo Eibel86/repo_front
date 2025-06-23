@@ -55,6 +55,9 @@ Inicia la aplicación (node `src/app.js`).
 - `npm run dev`
 Modo desarrollo con nodemon.
 
+- `npm run docs`
+Genera la documentación.
+
 
 ## Estructura de carpetas
 repo_front/
